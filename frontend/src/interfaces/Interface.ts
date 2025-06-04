@@ -1,11 +1,25 @@
+import { Socket } from "socket.io-client";
 
-export default interface Login{
+export type Login ={
   email:string,
   password:string
 }
 
-export interface Register{
+export type Register = {
   name: string,
   email: string,
   password:string
 }
+
+export type Message = {
+  id: string;
+  sender: string;
+  content: string;
+  timestamp: string;
+};
+
+export type MessageContextType = {
+  messages: Message[];
+  sendMessage: (msg: string) => void;
+  socket: Socket;
+};

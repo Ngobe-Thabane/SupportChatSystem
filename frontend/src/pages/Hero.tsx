@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import { login,register} from "../api/Auth";
+import { login,register} from "../lib/Auth";
 import { useNavigate } from "react-router";
 
 export default function Hero() {

@@ -1,5 +1,4 @@
-import type { Register } from "../interfaces/Interface";
-import type Login from "../interfaces/Interface";
+import type { Register, Login } from "../interfaces/Interface";
 import axios from "axios";
 
 export async function login(formData: Login){

@@ -1,5 +1,5 @@
 import ChatBuble from "../components/ChatBuble";
-import ChatInput from "../components/ChatInput";
+import ChatTextarea from "../components/ChatTextarea";
 import NavBar from "../components/Navbar";
 
 export default function DashBoard(){
@@ -16,7 +16,7 @@ export default function DashBoard(){
           <ChatBuble isUser={true} message="hi there"/>
           <ChatBuble isUser={false} message="how are you"/>
         </div>
-        <ChatInput/>
+        <ChatTextarea/>
 
       </section>
     </article>

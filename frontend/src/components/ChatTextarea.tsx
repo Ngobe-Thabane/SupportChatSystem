@@ -1,6 +1,8 @@
 import { useState } from "react";
+// import { useMessages } from "../context/MessageContext";
 
-export default function ChatInput() {
+export default function ChatTextarea() {
+  // const {sendMessage} = useMessages();
   const [message, setMessage] = useState("");
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
@@ -12,7 +14,7 @@ export default function ChatInput() {
 
   const handleSend = () => {
     if (message.trim()) {
-      console.log("Sending message:", message); // Replace with your send logic
+      // sendMessage(message);
       setMessage("");
     }
   };
