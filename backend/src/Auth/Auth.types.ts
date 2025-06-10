@@ -1,9 +1,8 @@
 
-export interface Register{
-  name: string,
+export type Register={
+  username: string,
   email: string,
   password : string,
-  role: string
 }
 
 export type RegisterResponse =

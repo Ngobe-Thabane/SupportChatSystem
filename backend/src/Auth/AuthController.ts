@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import { loginUser, registerUser } from "../service/AuthService.ts";
-import { Register } from "../model/Auth.ts";
+import { loginUser, registerUser } from "./AuthService.ts";
+import { Register } from "./Auth.types.ts";
 
 export async function loginController(req : Request, res: Response){
 
@@ -31,7 +31,7 @@ export async function registerController(req: Request, res: Response){
 
   const userData = req.body as Register;
 
-  if(!userData.email || !userData.name || !userData.password || !userData.role){
+  if(!userData.email || !userData.username || !userData.password ){
     return res.status(400).send({message: "All fields must b field"});
   }
 

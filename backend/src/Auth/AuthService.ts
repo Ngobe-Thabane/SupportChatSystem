@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import { LoginResponse, Register, RegisterResponse } from "../model/Auth.ts";
+import { LoginResponse, Register, RegisterResponse } from "./Auth.types.ts";
 import { createUser, findUserByEmail } from "../repository/UserRepository.ts";
 import { config } from 'dotenv';
 
@@ -22,6 +22,7 @@ export async function registerUser(userData: Register): Promise<RegisterResponse
     return { success: true}
 
   }catch(err: unknown){
+    console.log(err)
     return {success:false, error: 'internal_error'};
   }
   
@@ -42,7 +43,8 @@ export async function loginUser(email:string, password:string): Promise<LoginRes
     if(!isPasswordCorrect){
       return { success: false, error: 'invalid_password' }
     }
-    const userPayload = {name: user.rows[0].name, id: user.rows[0].id, email:user.rows[0].email, role:user.rows[0].role};
+
+    const userPayload = {name: user.rows[0].username, id: user.rows[0].user_id, email:user.rows[0].email};
 
     const token = jwt.sign( userPayload, process.env.JWT_SECRETE as string,{ expiresIn:'1h'});
 
