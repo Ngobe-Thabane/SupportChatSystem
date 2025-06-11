@@ -22,12 +22,11 @@ export async function registerUser(userData: Register): Promise<RegisterResponse
     return { success: true}
 
   }catch(err: unknown){
-    console.log(err)
     return {success:false, error: 'internal_error'};
   }
   
 }
-
+``
 export async function loginUser(email:string, password:string): Promise<LoginResponse>{
   
   try{
@@ -46,7 +45,7 @@ export async function loginUser(email:string, password:string): Promise<LoginRes
 
     const userPayload = {name: user.rows[0].username, id: user.rows[0].user_id, email:user.rows[0].email};
 
-    const token = jwt.sign( userPayload, process.env.JWT_SECRETE as string,{ expiresIn:'1h'});
+    const token = jwt.sign( userPayload, process.env.JWT_SECRET as string,{ expiresIn:'1h'});
 
     return { success: true, token: token }
   }

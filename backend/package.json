@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "ts-node ./src/index.ts",
+    "init-db": "bash ./src/configs/init_movie_schema.sh",
     "build": "tsc"
   },
   "dependencies": {
