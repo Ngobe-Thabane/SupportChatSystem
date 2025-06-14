@@ -30,7 +30,6 @@ export function verifyToken(req:Request, res:Response, next:NextFunction) {
 
   try {
     const decoded = jwt.verify(token, SECRET_KEY);
-    console.log(decoded)
     req.user = decoded as DecodedUser;
     next();
   } catch (err) {
