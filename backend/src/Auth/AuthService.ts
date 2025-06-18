@@ -43,7 +43,7 @@ export async function loginUser(email:string, password:string): Promise<LoginRes
       return { success: false, error: 'invalid_password' }
     }
 
-    const userPayload = {name: user.rows[0].username, id: user.rows[0].user_id, email:user.rows[0].email};
+    const userPayload = {name: user.rows[0].username, id: user.rows[0].user_id, email:user.rows[0].email, role:user.rows[0].role};
 
     const token = jwt.sign( userPayload, process.env.JWT_SECRET as string,{ expiresIn:'1h'});
 
