@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { addMovie, getMovie, getMovies } from "../repository/MoviesRepository.ts";
+import { addMovie, deleteMovie, getMovie, getMovies } from "../repository/MoviesRepository.ts";
 
 
 export async function getMoviesController(req: Request, res:Response){
@@ -19,6 +19,12 @@ export async function getMovieController(req:Request, res:Response){
   return res.status(200).send(movie.rows);
 }
 
+export async function deleteMovieController(req:Request, res:Response) {
+  const { id } = req.params;
+  if(!id) return res.status(400).send({message:'Bad Request'});
+  await deleteMovie(id);
+  return res.status(200).send({message:'Movie deleted'});
+}
 
 export async function addMovieController(req:Request, res:Response){
   

@@ -9,7 +9,7 @@ export async function getMovies() {
   return await db.query('SELECT * FROM movies', []);
 }
 
-export async function deleteMovie(movie_id:number) {
+export async function deleteMovie(movie_id:string) {
   return await db.query('DELETE FROM movies WHERE movie_id=$1', [movie_id]);
 }
 
