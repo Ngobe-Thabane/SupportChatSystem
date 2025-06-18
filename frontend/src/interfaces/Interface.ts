@@ -23,3 +23,20 @@ export type MessageContextType = {
   sendMessage: (msg: string) => void;
   socket: Socket;
 };
+
+export type MovieData = {
+  movie_id: string;
+  title : string;
+  image_url:string,
+  description: string,
+  genres : Array<number>,
+  duration_minutes: number;
+  release_date: null|string
+
+}
+export type Movie = {
+  title : string;
+  poster_path : string
+  release_date : string,
+  overview: string
+}

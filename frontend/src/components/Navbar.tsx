@@ -1,9 +1,11 @@
+import { Outlet } from "react-router";
 
 export default function NavBar(){
   return (
+    <>
     <div className="navbar bg-base-100 border-b border-gray-800">
       <div className="flex-1">
-        <a className="btn btn-ghost text-xl">daisyUI</a>
+        <a className="btn btn-ghost text-xl">MovieTime</a>
       </div>
       <div className="flex gap-2">
         <div className="dropdown dropdown-end">
@@ -29,5 +31,7 @@ export default function NavBar(){
         </div>
       </div>
     </div>
+    <Outlet/> 
+    </>
   )
 }
