@@ -20,7 +20,7 @@ export async function getMovieController(req:Request, res:Response){
 }
 
 export async function deleteMovieController(req:Request, res:Response) {
-  const { id } = req.params;
+  const { id } = req.body
   if(!id) return res.status(400).send({message:'Bad Request'});
   await deleteMovie(id);
   return res.status(200).send({message:'Movie deleted'});

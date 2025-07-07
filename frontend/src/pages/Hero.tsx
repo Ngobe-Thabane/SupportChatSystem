@@ -44,8 +44,8 @@ export default function Hero() {
 
   return (
     <div className="hero bg-base-200 min-h-screen transition-all duration-700">
-      <div className="hero-content flex-col lg:flex-row-reverse">
-        <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
+      <div className="">
+        <div className="card bg-base-100 w-full shrink-0 shadow-2xl">
           <div className="card-body transition-all duration-300 ease-in-out">
             <form onSubmit={handleSubmit}>
               <fieldset className="fieldset space-y-4">
@@ -109,7 +109,7 @@ export default function Hero() {
             </form>
           </div>
         </div>
-        <div className="text-center lg:text-left">
+        {/* <div className="text-center lg:text-left">
           <h1 className="text-5xl font-bold">
             {mode === "login" ? "Login now!" : "Join us now!"}
           </h1>
@@ -118,7 +118,7 @@ export default function Hero() {
               ? "Get access to your account in seconds."
               : "Register now and become one of us. It's mildly worth it!"}
           </p>
-        </div>
+        </div> */}
       </div>
     </div>
   );

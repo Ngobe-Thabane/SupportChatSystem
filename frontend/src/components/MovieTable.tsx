@@ -2,9 +2,11 @@ import axios from "axios";
 import { useEffect, useState } from "react"
 import { Link } from "react-router"
 import type { MovieData } from "../interfaces/Interface";
+import { Toast } from "./Toast";
 
 export function MovieTable(){
   const [movies, setMovies] = useState([]);
+  const [movieDeleted, setMovieDeleted] = useState(false);
   const token = localStorage.getItem('token');
   useEffect(()=>{
     const getMovies = async () =>{
@@ -24,48 +26,48 @@ export function MovieTable(){
 
     }
     getMovies();
-  }, [])
+  }, [movieDeleted])
   return (
-    <div className="overflow-x-auto">
-      <table className="table">
-        {/* head */}
-        <thead>
-          <tr>
-            <th></th>
-            <th>Poster</th>
-            <th>Name</th>
-            <th>Description</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {
-            movies.map((movie, index)=>{
-              return (<RowData movie={movie} index={index} token={token as string} />)
-            })
-          }
-        </tbody>
-        <tfoot>
-          <tr>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th>
-              <Link to={'/addMovies'} className="link-info" >Add Movie</Link>
-            </th>
-          </tr>
-          <tr></tr>
-        </tfoot>
-      </table>
-    </div>
+    <section className="flex-1">
+      <div className="flex justify-between px-5 my-4">
+        <h1 className="text-3xl font-bold">MovieTime</h1>
+        <Link to={'/addMovies'} className="btn btn-primary" >Add Movie</Link>
+      </div>
+      <div className="overflow-x-auto rounded-box border border-base-content/5 bg-base-10 mx-4 my-2 w-full">
+        <table className="table">
+          {/* head */}
+          <thead>
+            <tr>
+              <th></th>
+              <th>Poster</th>
+              <th>Name</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              movies.map((movie, index)=>{
+                return (<RowData movie={movie} index={index} token={token as string} movieDeleted={setMovieDeleted} />)
+              })
+            }
+          </tbody>
+        </table>
+      </div>
+   
+    </section>
   )
 }
 
 
-function RowData({index, movie, token}:{index:number, movie:MovieData, token:string}){
-  
+function RowData({index, movie, token, movieDeleted}:{index:number, movie:MovieData, token:string, movieDeleted:(isDeleted:boolean)=>void}){
+  const [isDeleting, setIsDeleting] = useState(false);
+  useEffect(()=>{
+    if(isDeleting){
+      setTimeout(()=>{
+        movieDeleted(true);
+      }, 1000)
+    }
+  }, [isDeleting])
   const deleteMovie = async()=>{
 
     try{
@@ -77,27 +79,31 @@ function RowData({index, movie, token}:{index:number, movie:MovieData, token:str
         data: {id:movie.movie_id}
       })
 
-      if(delMovie.status === 200) alert('Movie deleted');
+      if(delMovie.status === 200){
+        setIsDeleting(true);
+      }
 
     }catch(err){
       alert(err)
     }
   }
   return (
-    <tr>
-      <th>{index+1}</th>
-      <td>
-        <div className="avatar">
-          <div className="mask mask-squircle h-12 w-12">
-            <img
-              src={movie.image_url}
-              alt={movie.title}/>
+    <> 
+      <Toast text="Movie deleted" action={isDeleting} />
+      <tr>
+        <th>{index+1}</th>
+        <td>
+          <div className="avatar">
+            <div className="mask mask-squircle h-12 w-12">
+              <img
+                src={movie.image_url}
+                alt={movie.title}/>
+            </div>
           </div>
-        </div>
-      </td>
-      <td>{movie.title}</td>
-      <td>{movie.description}</td>
-      <td><button onClick={deleteMovie}>delete</button></td>
-    </tr>
+        </td>
+        <td>{movie.title}</td>
+        <td><button onClick={deleteMovie} className="btn btn-secondary">delete</button></td>
+      </tr>
+    </>
   )
 }

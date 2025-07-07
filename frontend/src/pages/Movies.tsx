@@ -26,7 +26,7 @@ export function Movies(){
   }, [])
 
   return (
-    <div className="grid grid-cols-3 gap-3 p-4 my-2" >
+    <div className="grid grid-cols-4  gap-3 p-4 my-2" >
       {
         movies.map((movie)=>{
           const {title, overview, release_date, poster_path} = movie;

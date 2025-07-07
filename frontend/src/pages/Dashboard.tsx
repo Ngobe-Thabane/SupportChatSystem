@@ -1,6 +1,4 @@
 
-import { Outlet } from "react-router";
-import NavBar from "../components/Navbar";
 import { Sidebar } from "../components/Sidebar";
 
 export default function DashBoard(){
@@ -8,7 +6,6 @@ export default function DashBoard(){
     <article>
       <section>
         <Sidebar />
-        {/* <Outlet /> */}
       </section>
     </article>
   )
