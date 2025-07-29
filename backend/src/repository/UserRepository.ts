@@ -7,7 +7,7 @@ export async function findUserByEmail(email:string){
 
 export async function createUser(userData: Register) {
   return db.query('INSERT INTO users(username, email,password) VALUES($1,$2,$3)', [userData.username, userData.email, userData.password]);
-}
+ }
 
 export async function deleteUser(user_id:string) {
   return db.query('DELETE FROM users WHERE user_id=$1', [user_id]);

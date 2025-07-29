@@ -3,7 +3,7 @@ import { loginUser, registerUser } from "./AuthService.ts";
 import { Register } from "./Auth.types.ts";
 
 export async function loginController(req : Request, res: Response){
-
+  
   const {email, password} = req.body;
   
   if(!email || !password){
