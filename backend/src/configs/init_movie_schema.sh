@@ -15,7 +15,7 @@ DROP TABLE users;
 DROP TABLE genres;
 DROP TABLE movies CASCADE;
 DROP TABLE movie_genres;
-DROP TABLE theater CASCADE;
+DROP TABLE theaters CASCADE;
 DROP TABLE showtimes CASCADE;
 EOF
   )
@@ -52,7 +52,7 @@ genre_id INTEGER REFERENCES genres(genre_id) ON DELETE CASCADE,
 PRIMARY KEY (movie_id, genre_id)
 );
 
-CREATE TABLE IF NOT EXISTS theater(
+CREATE TABLE IF NOT EXISTS theaters(
 theater_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
 name VARCHAR(100) NOT NULL,
 location VARCHAR(255) NOT NULL
@@ -61,7 +61,7 @@ location VARCHAR(255) NOT NULL
 CREATE TABLE IF NOT EXISTS showtimes(
 showtime_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
 movie_id UUID NOT NULL REFERENCES movies(movie_id) ON DELETE CASCADE,
-theater_id UUID NOT NULL REFERENCES theater(theater_id) ON DELETE CASCADE,
+theater_id UUID NOT NULL REFERENCES theaters(theater_id) ON DELETE CASCADE,
 show_date DATE NOT NULL,
 start_time TIME NOT NULL
 );
@@ -86,6 +86,28 @@ INSERT INTO genres (genre_id, name) VALUES
 (53, 'Thriller'),
 (10752, 'War'),
 (37, 'Western');
+
+INSERT INTO theaters (name, location) VALUES
+  ('AMC Empire 25', 'New York, USA'),
+  ('Regal LA Live', 'Los Angeles, USA'),
+  ('Odeon Leicester Square', 'London, UK'),
+  ('Vue West End', 'London, UK'),
+  ('Cineplex Scotiabank Theatre', 'Toronto, Canada'),
+  ('Landmark Cinemas', 'Calgary, Canada'),
+  ('Hoyts Melbourne Central', 'Melbourne, Australia'),
+  ('Event Cinemas George St', 'Sydney, Australia'),
+  ('Pathé La Villette', 'Paris, France'),
+  ('UGC Ciné Cité Les Halles', 'Paris, France'),
+  ('CineStar Berlin', 'Berlin, Germany'),
+  ('CinemaxX Hamburg-Dammtor', 'Hamburg, Germany'),
+  ('Toho Cinemas Shinjuku', 'Tokyo, Japan'),
+  ('United Cinemas Toyosu', 'Tokyo, Japan'),
+  ('PVR ICON', 'Mumbai, India'),
+  ('INOX Leisure', 'Delhi, India'),
+  ('Cinépolis JK Iguatemi', 'São Paulo, Brazil'),
+  ('UCI New York City Center', 'Rio de Janeiro, Brazil'),
+  ('Ster-Kinekor Sandton City', 'Johannesburg, South Africa'),
+  ('Nu Metro Hyde Park', 'Johannesburg, South Africa');
 
 EOF
   )

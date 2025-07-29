@@ -35,7 +35,6 @@ export async function addMovieController(req:Request, res:Response){
   }
 
   const movie_id =  await addMovie(title, description, poster_url);
-  console.log(movie_id);
   
   addMovieGenres(genres, movie_id.rows[0].movie_id);
   return res.status(201).send({message:"MovieAdded"});
