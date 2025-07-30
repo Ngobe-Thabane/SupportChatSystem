@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { addShowTime, deleteShowTime, getMovieShowTime, getShowTimes, getTheaterShowTimes } from "../../repository/ShowtimesRepository";
+import { generateSeatsForShowtime } from "../../repository/Seats";
 
 
 export async function addShowtimeController(req:Request, res:Response){
@@ -9,7 +10,9 @@ export async function addShowtimeController(req:Request, res:Response){
   if(!movie_id || !theater_id || !show_date || !start_time){
     return res.status(400).send({message:"Missing fields"});
   }
+  
   const showTime = await addShowTime(movie_id, theater_id, show_date, start_time);
+  await generateSeatsForShowtime(showTime.showTime_id);
 
   return res.status(201).send({showTime:showTime})
 

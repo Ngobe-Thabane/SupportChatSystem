@@ -66,6 +66,25 @@ show_date DATE NOT NULL,
 start_time TIME NOT NULL
 );
 
+CREATE TABLE IF NOT EXISTS seats (
+  seat_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  showtime_id UUID NOT NULL REFERENCES showtimes(showtime_id) ON DELETE CASCADE,
+  seat_number VARCHAR(10) NOT NULL, -- e.g., A1, B3
+  is_reserved BOOLEAN DEFAULT FALSE
+);
+
+CREATE TABLE IF NOT EXISTS bookings (
+  booking_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id UUID NOT NULL REFERENCES users(user_id) ON DELETE CASCADE,
+  seat_id UUID NOT NULL REFERENCES seats(seat_id) ON DELETE CASCADE,
+  booked_at TIMESTAMP DEFAULT NOW(),
+  status VARCHAR(20) NOT NULL DEFAULT 'active' CHECK (status IN ('active', 'cancelled')),
+  canceled_at TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT NOW(),
+  UNIQUE(seat_id)
+);
+
+
 INSERT INTO genres (genre_id, name) VALUES
 (28, 'Action'),
 (12, 'Adventure'),
