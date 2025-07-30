@@ -39,6 +39,7 @@ export async function getShowTimes() {
       s.show_date,
       s.start_time,
       m.title AS movie_title,
+      m.poster_url,
       t.name AS theater_name,
       t.location
     FROM showtimes s

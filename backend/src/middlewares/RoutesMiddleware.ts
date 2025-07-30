@@ -32,8 +32,8 @@ export function verifyToken(req:Request, res:Response, next:NextFunction) {
     const decoded = jwt.verify(token, SECRET_KEY);
     req.user = decoded as DecodedUser;
     next();
-  } catch (err) {
-    return res.status(403).send({ error:err });
+  } catch (err:unknown) {
+    return res.status(403).send({ error:err.message });
   }
 }
 

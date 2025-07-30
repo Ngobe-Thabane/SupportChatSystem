@@ -26,7 +26,7 @@ export async function registerUser(userData: Register): Promise<RegisterResponse
   }
   
 }
-``
+
 export async function loginUser(email:string, password:string): Promise<LoginResponse>{
   
   try{
@@ -45,7 +45,7 @@ export async function loginUser(email:string, password:string): Promise<LoginRes
 
     const userPayload = {name: user.rows[0].username, id: user.rows[0].user_id, email:user.rows[0].email, role:user.rows[0].role};
 
-    const token = jwt.sign( userPayload, process.env.JWT_SECRET as string,{ expiresIn:'1h'});
+    const token = jwt.sign( userPayload, process.env.JWT_SECRET as string);
 
     return { success: true, token: token }
   }

@@ -5,26 +5,32 @@ import { generateSeatsForShowtime } from "../../repository/Seats";
 
 export async function addShowtimeController(req:Request, res:Response){
 
-  const {movie_id, theater_id, show_date, start_time} = req.body;
+  try{
 
-  if(!movie_id || !theater_id || !show_date || !start_time){
-    return res.status(400).send({message:"Missing fields"});
-  }
+    const {movie_id, theater_id, show_date, start_time} = req.body;
   
-  const showTime = await addShowTime(movie_id, theater_id, show_date, start_time);
-  await generateSeatsForShowtime(showTime.showTime_id);
-
-  return res.status(201).send({showTime:showTime})
+    if(!movie_id || !theater_id || !show_date || !start_time){
+      return res.status(400).send({message:"Missing fields"});
+    }
+    
+    const showTime = await addShowTime(movie_id, theater_id, show_date, start_time);
+    await generateSeatsForShowtime(showTime.showtime_id);
+  
+    return res.status(201).send({showTime:showTime.showtime_id})
+  }catch(err:unknown){
+    console.log(err.stack);
+    return res.status(500).send({message:err.message});
+  }
 
 }
 
-export async function getShowTimesController(req:Request, res:Response){
-  const {showTime_id} = req.body;
-  if(!showTime_id) return res.status(400).send({message:'Show time id is required'});
-
-  const showTime = await getMovieShowTime(showTime_id);
+export async function getMovieShowTimesController(req:Request, res:Response){
+  const {movie_id} = req.body;
+  if(!movie_id) return res.status(400).send({message:'Show time id is required'});
+  
+  const showTime = await getMovieShowTime(movie_id);
   return res.status(200).send({movieTime:showTime});
-
+  
 }
 
 export async function getAllShowTimesController(req:Request, res:Response) {
@@ -36,7 +42,7 @@ export async function deleteShowTimeController(req:Request, res:Response) {
   const {showTime_id} = req.body;
 
   if(!showTime_id){
-    res.status(400).send({message:'showtime id is required'})
+    return res.status(400).send({message:'showtime id is required'})
   }
 
   await deleteShowTime(showTime_id);

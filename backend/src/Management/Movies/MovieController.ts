@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { addMovie, deleteMovie, getMovie, getMovies, addMovieGenres } from "../../repository/MoviesRepository.ts";
+import { getAdminDashboardStats } from "../../repository/AdminDashBoard.ts";
 
 
 export async function getMoviesController(req: Request, res:Response){
@@ -38,4 +39,16 @@ export async function addMovieController(req:Request, res:Response){
   
   addMovieGenres(genres, movie_id.rows[0].movie_id);
   return res.status(201).send({message:"MovieAdded"});
+}
+
+export async function adminStatsController(req:Request, res:Response) {
+
+  try{
+    const stats = await getAdminDashboardStats();
+    return res.status(200).send(stats);
+
+  }catch(err:unknown){
+    return res.status(500).send({message:err.message})
+  }
+  
 }
