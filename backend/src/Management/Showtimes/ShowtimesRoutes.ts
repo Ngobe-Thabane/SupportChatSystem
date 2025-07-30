@@ -8,7 +8,7 @@ const showTimes = express.Router();
 showTimes.use(verifyToken)
 
 showTimes.post('/showTimes', requireAdmin, addShowtimeController);
-showTimes.delete('/showTime/:showtime_id', requireAdmin,  deleteShowTimeController)
+showTimes.delete('/showTime/', requireAdmin,  deleteShowTimeController)
 showTimes.get('/showTimes/:showtime_id', getShowTimesController);
 showTimes.get('/allShowTimes', getAllShowTimesController);
 showTimes.get('/theaterShowTimes', getTheaterShowTimesController);
