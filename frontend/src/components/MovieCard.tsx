@@ -1,49 +1,20 @@
-import axios from "axios";
-import type { Movie } from "../interfaces/Interface";
-import { useState } from "react";
-import { Toast } from "./Toast";
+import { Link } from "react-router";
 
-export function MovieCard({movie}:{movie:Movie}){
+export function MovieCard(){
 
-  const token = localStorage.getItem('token');
-  const [isMovieAdded, setMovieAdded] = useState(false);
-  const addMovie = async()=>{
-
-    const data = {
-      title: movie.title,
-      description: movie.overview,
-      image: movie.poster_path,
-      genres: [],
-      duration: 1
-    }
-
-    const addMovie = await axios.post('http://localhost:5000/movie',data, {
-      headers:{
-        'Content-Type' : 'application/json',
-        'Authorization' : `Bearer ${token}`,
-      }
-    })
-
-    if(addMovie.status === 200) {
-      setMovieAdded(true);
-    }
-  }
   return (
     <>
-      <Toast text="Movie added" action={isMovieAdded} />
-      <div className="card bg-base-100 shadow-sm opacity-75 w-full max-w-xs">
-        <figure className="h-64 overflow-hidden">
-          <img
-            src={movie.poster_path}
-            alt={movie.title}
-            className="object-cover w-full h-full"
-          />
-        </figure>
-        <div className="card-body p-4">
-          <h2 className="card-title text-base">{movie.title}</h2>
-          <p className="text-sm line-clamp-3">{movie.overview}</p>
-          <div className="card-actions justify-end">
-            <button className="btn btn-primary btn-sm" onClick={addMovie}>Add Movie</button>
+      <div className="m-4 mb-8 px-4 w-fit bg-base-100">
+        <div className="rounded-lg bg-base-100 shadow-lg">
+          <img src="https://image.tmdb.org/t/p/w500/1E5baAaEse26fej7uHcjOgEE2t2.jpg" alt="movie poster" className="rounded-t-lg h-96" />
+          <div className="p-2">
+            <Link to={'/moviedetails'}>
+              <h2 className="mb-2 text-lg font-semibold">Movie Title</h2>
+            </Link>
+            <div className="flex gap-3">
+              <a href="#" className="badge">action</a>
+              <a href="#" className="badge">scifi</a>
+            </div>
           </div>
         </div>
       </div>
