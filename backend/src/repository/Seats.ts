@@ -10,7 +10,7 @@ export async function generateSeatsForShowtime(showtime_id: string) {
   let i = 1;
   for (const row of rows) {
     for (let num = 1; num <= seatsPerRow; num++) {
-      const seatNumber = `${row}${num}`; // e.g., A1, B5, J10
+      const seatNumber = `${row}${num}`; 
       values.push(showtime_id, seatNumber);
       placeholders.push(`($${i++}, $${i++})`);
     }

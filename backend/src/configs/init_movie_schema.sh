@@ -134,5 +134,5 @@ INSERT INTO theaters (name, location) VALUES
 EOF
   )
 fi
-# Run the SQL commands using psql
+
 echo "$SQL_COMMANDS" | psql -U "$DB_USER" -d "$DB_NAME" -h "$DB_HOST" -p "$DB_PORT"
