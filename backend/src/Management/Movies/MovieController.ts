@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { addMovie, deleteMovie, getMovie, getMovies, addMovieGenres } from "../repository/MoviesRepository.ts";
+import { addMovie, deleteMovie, getMovie, getMovies, addMovieGenres } from "../../repository/MoviesRepository.ts";
 
 
 export async function getMoviesController(req: Request, res:Response){

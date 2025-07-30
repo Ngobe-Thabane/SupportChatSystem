@@ -1,6 +1,6 @@
 import db from "../configs/db.ts";
-
-async function addShowTime(movie_id: string, theater_id: string, show_date: Date, start_time: number) {
+ 
+export async function addShowTime(movie_id: string, theater_id: string, show_date: Date, start_time: number) {
   const query = `
     INSERT INTO showtimes (movie_id, theater_id, show_date, start_time)
     VALUES ($1, $2, $3, to_timestamp($4)::time)
@@ -11,11 +11,11 @@ async function addShowTime(movie_id: string, theater_id: string, show_date: Date
   return result.rows[0];
 }
 
-async function deleteShowTime(showtime_id: string) {
+export async function deleteShowTime(showtime_id: string) {
   return db.query('DELETE FROM showtimes WHERE showtime_id = $1', [showtime_id]);
 }
 
-async function getMovieShowTime(movie_id: string) {
+export async function getMovieShowTime(movie_id: string) {
   const query = `
     SELECT 
       s.showtime_id,
@@ -32,7 +32,7 @@ async function getMovieShowTime(movie_id: string) {
   return result.rows;
 }
 
-async function getShowTimes() {
+export async function getShowTimes() {
   const query = `
     SELECT 
       s.showtime_id,
@@ -50,7 +50,7 @@ async function getShowTimes() {
   return result.rows;
 }
 
-async function getTheaterShowTimes(theater_id: string) {
+export async function getTheaterShowTimes(theater_id: string) {
   const query = `
     SELECT 
       s.showtime_id,

@@ -1,6 +1,6 @@
 import express from 'express';
 import { addMovieController, deleteMovieController, getMovieController, getMoviesController } from './MovieController.ts';
-import { requireAdmin, verifyToken } from '../middlewares/RoutesMiddleware.ts';
+import { requireAdmin, verifyToken } from '../../middlewares/RoutesMiddleware.ts';
 
 const movieRoutes = express.Router();
 

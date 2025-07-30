@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { addTheater, getExactTheater, getTheaters } from "../repository/TheaterRepository";
+import { addTheater, getExactTheater, getTheaters } from "../../repository/TheaterRepository";
 
 export async function AddTheaterController(req:Request, res:Response){
 
@@ -29,7 +29,7 @@ export async function getTheaterListController(req:Request, res:Response){
 
   try{
     const theaters = await getTheaters();
-    return res.status(200).send({theaters:theaters});
+    return res.status(200).send({theaters:theaters.rows});
   }
   catch(err){
     return res.send({message:'Internal server error'});

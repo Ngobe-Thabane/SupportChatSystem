@@ -33,7 +33,7 @@ export function verifyToken(req:Request, res:Response, next:NextFunction) {
     req.user = decoded as DecodedUser;
     next();
   } catch (err) {
-    return res.status(403).send({ error: 'Invalid token' });
+    return res.status(403).send({ error:err });
   }
 }
 
