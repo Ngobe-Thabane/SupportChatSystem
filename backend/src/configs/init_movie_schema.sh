@@ -17,6 +17,9 @@ DROP TABLE movies CASCADE;
 DROP TABLE movie_genres;
 DROP TABLE theaters CASCADE;
 DROP TABLE showtimes CASCADE;
+DROP TABLE seats CASCADE;
+DROP TABLE bookings;
+
 EOF
   )
 
