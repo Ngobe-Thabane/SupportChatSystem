@@ -14,10 +14,10 @@ export async function deleteMovie(movie_id:string) {
 }
 
 export async function getMovie(title:string) {
-  return await db.query(`SELECT m.movie_id, m.title, m.poster_url, m.description, ARRAY_AGG(g.name ORDER BY g.name) AS genres FROM movies m LEFT JOIN movie_genres mg ON m.movie_id=mg.movie_id LEFT JOIN genres g ON mg.genre_id=g.genre_id WHERE m.movie_id=${title} GROUP BY m.movie_id`, [], [title]);
+  return await db.query(`SELECT m.movie_id, m.title, m.poster_url, m.description, ARRAY_AGG(g.name ORDER BY g.name) AS genres FROM movies m LEFT JOIN movie_genres mg ON m.movie_id=mg.movie_id LEFT JOIN genres g ON mg.genre_id=g.genre_id WHERE m.movie_id=${title} GROUP BY m.movie_id`, [title]);
 }
 
-export async function addMovieGenres(genres:Array<numbers>, movie_id:string){
+export async function addMovieGenres(genres:Array<number>, movie_id:string){
   genres.forEach(async (genre)=>{
     await db.query('INSERT INTO movie_genres(movie_id, genre_id) VALUES($1,$2)', [movie_id, genre]);
   });
