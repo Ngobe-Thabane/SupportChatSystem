@@ -7,7 +7,7 @@ export async function bookingController(req:Request, res:Response){
 
   if(!showTime_id || !seat_numbers) return res.status(400).send({message:'All fields must be field'});
   
-  const bookedSeat = await bookSeats(req.user?.user_id as string, showTime_id, seat_numbers);
+  const bookedSeat = await bookSeats(req.user?.id as string, showTime_id, seat_numbers);
 
   return res.status(201).send(bookedSeat);
 }
@@ -17,14 +17,14 @@ export async function cancelBookingController(req:Request, res:Response){
 
   if(!booking_id) return res.status(400).send({message:"Booking id is required"});
 
-  const bookingCanceled = cancelBooking(req.user?.user_id as string, booking_id);
+  const bookingCanceled = cancelBooking(req.user?.id as string, booking_id);
 
   return res.status(200).send(bookingCanceled);
 }
 
 export async function getUserBooking(req:Request, res:Response) {
 
-  const userBookings = getUserDashboard(req.user?.user_id as string);
+  const userBookings = getUserDashboard(req.user?.id as string);
   return res.status(200).send(userBookings);
   
 }

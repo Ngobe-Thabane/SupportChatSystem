@@ -5,7 +5,7 @@ import { config } from "dotenv";
 config({path:'../configs/.env'});
 
 interface DecodedUser {
-  user_id: string;
+  id: string;
   username: string;
   role: 'user' | 'admin';
   iat: number,

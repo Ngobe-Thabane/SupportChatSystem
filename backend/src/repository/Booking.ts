@@ -64,7 +64,6 @@ export async function getUserDashboard(user_id: string) {
       m.title AS movie_title,
       m.poster_url,
       m.description,
-      m.release_date,
       sh.show_date,
       sh.start_time,
       t.name AS theater_name,
@@ -74,8 +73,7 @@ export async function getUserDashboard(user_id: string) {
     JOIN showtimes sh ON s.showtime_id = sh.showtime_id
     JOIN movies m ON sh.movie_id = m.movie_id
     JOIN theaters t ON sh.theater_id = t.theater_id
-    WHERE b.user_id = $1
-    ORDER BY sh.show_date DESC, sh.start_time DESC;
+    WHERE b.user_id = $1;
   `;
   const result = await db.query(query, [user_id]);
   return result.rows;
