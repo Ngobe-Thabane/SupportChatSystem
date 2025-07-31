@@ -25,7 +25,7 @@ export async function addShowtimeController(req:Request, res:Response){
 }
 
 export async function getMovieShowTimesController(req:Request, res:Response){
-  const {movie_id} = req.body;
+  const {movie_id} = req.params;
   if(!movie_id) return res.status(400).send({message:'Show time id is required'});
   
   const showTime = await getMovieShowTime(movie_id);

@@ -18,10 +18,10 @@ export async function getMovieShowtime() {
 
 
 export async function getMovieShowTime(movie_id:string) {
-
-    const movieShowTimes = await axios.get('http://localhost:5000/movieShowTime', {
-        data:{movie_id:movie_id}, 
-        headers:{"Content-Type":"application/json"}});
+    const movieShowTimes = await axios.get(`http://localhost:5000/movieShowTime/${movie_id}`, {
+        headers:{"Content-Type":"application/json"}
+    }
+    );
     return movieShowTimes;
 }
 

@@ -1,54 +1,22 @@
 import { useEffect, useState } from 'react';
 import MovieCard from '../components/MovieDeatil';
-import BookingModal from '../components/BookingModal';
-import type { Movie } from '../interfaces/Movies.interface';
 import type { ShowtTimes } from '../interfaces/Showtimes.iterface';
 import { getMovieShowTime } from '../lib/GetMovies';
 import { useLocation } from 'react-router';
 
 export default function MovieDetails(){
   const movieState = useLocation();
-  const [activeCinemaId, setActiveCinemaId] = useState<string | null>(null);
-  const [selectedSeats, setSelectedSeats] = useState<boolean[]>([]);
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [movieShowtimes, setMovieShowtimes] = useState<Array<ShowtTimes>>([]);
 
   useEffect(()=>{
     const showTimes = async ()=>{
       const times = await getMovieShowTime(movieState.state.movie_id);
-      setMovieShowtimes(times.data)
+      console.log(times.data)
+      setMovieShowtimes(times.data.movieTime)
     }
     showTimes();
   }, [])
 
-  const handleCinemaSelect = (cinema: ShowtTimes) => {
-    if (cinema.showtime_id === activeCinemaId) {
-      setActiveCinemaId(null);
-      setSelectedSeats([]);
-    } else {
-      setActiveCinemaId(cinema.showtime_id);
-      setSelectedSeats(new Array(cinema.seats.length).fill(false));
-    }
-  };
-
-  const handleSeatToggle = (index: number) => {
-    const updated = [...selectedSeats];
-    updated[index] = !updated[index];
-    setSelectedSeats(updated);
-  };
-
-  const handleBookClick = () => {
-    if (selectedSeats.includes(true)) {
-      setIsModalOpen(true);
-    }
-  };
-
-  const handleConfirmBooking = () => {
-    setIsModalOpen(false);
-    alert('Booking confirmed!');
-    setActiveCinemaId(null);
-    setSelectedSeats([]);
-  };
 
   return (
     <div className="bg-base-100 min-h-screen pb-20">
@@ -64,10 +32,21 @@ export default function MovieDetails(){
       </div>
 
       <div className="max-w-4xl mx-auto px-6 mt-12">
-        <h2 className="text-2xl font-semibold mb-4">Choose a Cinema</h2>
+        <h2 className="text-2xl font-semibold mb-4 text-center">Choose a Cinema</h2>
       </div>
-
-      <BookingModal
+      <div className='flex gap-4 px-10'>
+        {
+          movieShowtimes.map((show)=>{
+            return (
+              <div className='bg-base-300 p-2 rounded shadow cursor-pointer'>
+                <p className='text-lg bold'>{show.theater_name}</p>
+                <p className='text-sm text-gray-500'>{show.location}</p>
+              </div>
+            )
+          })
+        }
+      </div>
+      {/* <BookingModal
         isOpen={isModalOpen}
         cinemaName={
           movieShowtimes.find((cinema) => cinema.showtime_id === activeCinemaId)?.theater_name || ''
@@ -75,7 +54,7 @@ export default function MovieDetails(){
         selectedCount={selectedSeats.filter(Boolean).length}
         onClose={() => setIsModalOpen(false)}
         onConfirm={handleConfirmBooking}
-      />
+      /> */}
     </div>
   );
 };

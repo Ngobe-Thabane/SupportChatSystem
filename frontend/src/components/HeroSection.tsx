@@ -2,33 +2,27 @@
 import { useEffect, useState } from "react";
 
 const slides = [
-  {
-    id: 1,
-    title: "Interstellar",
-    genre: "Sci-Fi, Adventure",
-    description:
-      "A team of explorers travel through a wormhole in space in an attempt to ensure humanity's survival.",
-    image:
-      "https://image.tmdb.org/t/p/w500/1E5baAaEse26fej7uHcjOgEE2t2.jpg",
-  },
-  {
-    id: 2,
-    title: "The Dark Knight",
-    genre: "Action, Crime, Drama",
-    description:
-      "Batman faces his toughest enemy yet – the Joker – as he fights for Gotham's soul.",
-    image:
-      "https://image.tmdb.org/t/p/w500/1E5baAaEse26fej7uHcjOgEE2t2.jpg",
-  },
-  {
-    id: 3,
-    title: "Dune: Part Two",
-    genre: "Sci-Fi, Epic",
-    description:
-      "Paul Atreides unites with the Fremen and sets out to fulfill his destiny on Arrakis.",
-    image:
-      "https://image.tmdb.org/t/p/w500/1E5baAaEse26fej7uHcjOgEE2t2.jpg",
-  },
+    {
+        "id": 574475,
+        "genres": [27, 9648],
+        "title": "Final Destination Bloodlines",
+        "description": "Plagued by a violent recurring nightmare, college student Stefanie heads home to track down the one person who might be able to break the cycle and save her family from the grisly demise that inevitably awaits them all.",
+        "image": "https://image.tmdb.org/t/p/original/6WxhEvFsauuACfv8HyoVX6mZKFj.jpg"
+    },
+    {
+        "id": 1426776,
+        "genres": [53, 18, 80],
+        "title": "STRAW",
+        "description": "What will be her last straw? A devastatingly bad day pushes a hardworking single mother to the breaking point — and into a shocking act of desperation.",
+        "image": "https://image.tmdb.org/t/p/original/t3cmnXYtxJb9vVL1ThvT2CWSe1n.jpg"
+    },
+    {
+        "id": 552524,
+        "genres": [10751, 878, 35, 12],
+        "title": "Lilo & Stitch",
+        "description": "The wildly funny and touching story of a lonely Hawaiian girl and the fugitive alien who helps to mend her broken family.",
+        "image": "https://image.tmdb.org/t/p/original/A89x10Eqt43bPFEWPpbraWwkaFr.jpg"
+    }
 ];
 
 export default function HeroCarousel() {
@@ -55,14 +49,15 @@ export default function HeroCarousel() {
   return (
     <div className="relative w-full min-h-screen">
       <div
-        className={`hero min-h-screen transition-all bg-[url(${slide.image})] bg-cover bg-center  duration-700 z-10`}
-      >
-        <div className="hero-overlay bg-black bg-opacity-60"></div>
+        className={`hero min-h-screen transition-all bg-center duration-700 z-10`}
+        style={{backgroundImage:`url(${slide.image})`, backgroundSize:'cover', backgroundPosition:'center'}}
+        >
+        <div className="hero-overlay bg-black/60 bg-opacity-60" ></div>
         <div className="hero-content text-white text-left max-w-2xl">
           <div>
             <h1 className="text-5xl font-bold mb-2">{slide.title}</h1>
             <p className="text-sm uppercase text-primary font-semibold mb-4">
-              {slide.genre}
+              {/* {slide.genres} */}
             </p>
             <p className="mb-6">{slide.description}</p>
             <button className="btn btn-primary">Book Now</button>
