@@ -1,8 +1,6 @@
-// pages/AuthForm.tsx
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import { useAuthStore } from "../stores/useAuthStore";
-import axios from "axios";
 import { loginUser, registerUser } from "../lib/Auth";
 import type { Auth } from "../interfaces/Auth.Interface";
 
@@ -27,10 +25,9 @@ export default function AuthForm() {
 
     try {
       setLoading(true);
-      const endpoint = mode === "login" ? "/login" : "/signup";
       if(mode === 'login'){
         const res = await loginUser({email:email, password:password} as Auth);
-        const { token, user } = res.data; // assumes { user: { username, role }, token }
+        const { token, user } = res.data; 
         login({ username: user.username, role: user.role, token });
         navigate(user.role === "admin" ? "/admin" : "/user");
       }else{
