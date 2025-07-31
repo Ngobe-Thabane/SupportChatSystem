@@ -1,17 +1,11 @@
 import React from 'react';
-
-interface Cinema {
-  id: number;
-  name: string;
-  location: string;
-  seats: boolean[];
-}
+import type { ShowtTimes } from '../interfaces/Showtimes.iterface';
 
 interface CinemaListProps {
-  cinemas: Cinema[];
-  activeCinemaId: number | null;
+  cinemas: ShowtTimes[];
+  activeCinemaId: string | null;
   selectedSeats: boolean[];
-  onCinemaSelect: (cinema: Cinema) => void;
+  onCinemaSelect: (cinema: ShowtTimes) => void;
   onSeatToggle: (index: number) => void;
   onBookClick: () => void;
 }
@@ -27,20 +21,20 @@ const CinemaList: React.FC<CinemaListProps> = ({
   return (
     <ul className="space-y-4">
       {cinemas.map((cinema) => (
-        <li key={cinema.id}>
+        <li key={cinema.showtime_id}>
           <div
             className={`p-4 rounded-lg cursor-pointer border ${
-              activeCinemaId === cinema.id
+              activeCinemaId === cinema.showtime_id
                 ? 'bg-primary text-white border-primary'
                 : 'bg-base-200 hover:bg-base-300 border-base-300'
             }`}
             onClick={() => onCinemaSelect(cinema)}
           >
-            <h3 className="text-lg font-semibold">{cinema.name}</h3>
+            <h3 className="text-lg font-semibold">{cinema.theater_name}</h3>
             <p className="text-sm opacity-70">{cinema.location}</p>
           </div>
 
-          {activeCinemaId === cinema.id && (
+          {activeCinemaId === cinema.showtime_id && (
             <div className="mt-4">
               <h4 className="mb-2 text-sm font-medium">Select your seats</h4>
               <div className="grid grid-cols-8 gap-2">

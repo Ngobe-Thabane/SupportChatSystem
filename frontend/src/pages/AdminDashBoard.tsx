@@ -1,10 +1,15 @@
 // pages/AdminDashboard.tsx
 
+import { Link } from "react-router";
+
 
 export default function AdminDashboard() {
   return (
     <div className="min-h-screen bg-base-200 text-base-content p-6">
-      <h1 className="text-3xl font-bold mb-6">🎬 Admin Dashboard</h1>
+      <div>
+        <h1 className="text-3xl font-bold mb-6">Admin Dashboard</h1>
+        <Link to={'/admin/movies'} className="btn btn-primary">Add items</Link>
+      </div>
 
       {/* Stats Summary */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">

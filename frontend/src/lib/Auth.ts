@@ -1,7 +1,8 @@
-import type { Register, Login } from "../interfaces/Interface";
-import axios from "axios";
 
-export async function login(formData: Login){
+import axios from "axios";
+import type { Auth } from "../interfaces/Auth.Interface";
+
+export async function loginUser(formData: Auth){
 
   const result = await axios({
     method: 'post',
@@ -15,7 +16,7 @@ export async function login(formData: Login){
   return result;
 }
 
-export async function register(formData: Register){
+export async function registerUser(formData: Auth){
   
   const result = await axios({
     method: 'post',

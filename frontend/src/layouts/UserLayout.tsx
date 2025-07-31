@@ -1,17 +1,18 @@
 // layouts/UserLayout.tsx
-import { Link, Outlet } from "react-router";
+import { Link, Outlet, useNavigate } from "react-router";
 import { useAuthStore } from "../stores/useAuthStore";
 
 export default function UserLayout() {
   const user = useAuthStore((state) => state.user);
   const logout = useAuthStore((state) => state.logout);
+  const navigate = useNavigate();
 
   return (
-    <div className="flex min-h-screen bg-base-200 text-base-content">
+    <div className="flex h-screen bg-base-200 text-base-content ">
       {/* Sidebar */}
       <aside className="w-64 bg-base-100 shadow-lg p-4 hidden md:flex flex-col justify-between">
         <div>
-          <h1 className="text-2xl font-bold mb-6 text-primary">🎬 My Movies</h1>
+          <h1 className="text-2xl font-bold mb-6 text-primary">MovieTime</h1>
 
           <div className="flex items-center gap-3 mb-6">
             <div className="avatar">
@@ -19,9 +20,8 @@ export default function UserLayout() {
                 <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
               </div>
             </div>
-            <div>
+            <div className="flex">
               <p className="font-semibold">{user?.username}</p>
-              <span className="badge badge-outline badge-sm">User</span>
             </div>
           </div>
 
@@ -41,7 +41,10 @@ export default function UserLayout() {
           </nav>
         </div>
 
-        <button onClick={logout} className="btn btn-sm btn-outline w-full mt-4">
+        <button onClick={ ()=>{
+            logout();
+            navigate('/');
+        }} className="btn btn-sm btn-outline w-full mt-4">
           Logout
         </button>
       </aside>

@@ -7,6 +7,9 @@ import AdminLayout from '../layouts/AdminLayout';
 import AdminDashboard from '../pages/AdminDashBoard';
 import UserLayout from '../layouts/UserLayout';
 import UserDashboard from '../pages/user/UserDashboard';
+import { MovieGrid } from './MovieGrid';
+import { Movies } from '../pages/Movies';
+import { MovieTable } from './MovieTable';
 
 function App() {
   return (
@@ -20,9 +23,13 @@ function App() {
         <Route path="/signup" element={<AuthForm />} />
         <Route path='/admin' element={<AdminLayout/>}>
           <Route index element={<AdminDashboard />} />
+          <Route path='/admin/movies' element={<Movies/>}/>
+          <Route path='/admin/catalog' element={<MovieTable/>}/>
         </Route>
         <Route path='/user' element={<UserLayout/>}>
           <Route index element={<UserDashboard/>}/>
+          <Route path='/user/explore' element={<MovieGrid/>} />
+          <Route path='/user/moviedetails' element={<MovieDetails/>} />
         </Route>
       </Routes>
     </BrowserRouter>

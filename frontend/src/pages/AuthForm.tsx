@@ -3,6 +3,8 @@ import { useState } from "react";
 import { useNavigate } from "react-router";
 import { useAuthStore } from "../stores/useAuthStore";
 import axios from "axios";
+import { loginUser, registerUser } from "../lib/Auth";
+import type { Auth } from "../interfaces/Auth.Interface";
 
 export default function AuthForm() {
   const [mode, setMode] = useState<"login" | "signup">("login");
@@ -26,17 +28,16 @@ export default function AuthForm() {
     try {
       setLoading(true);
       const endpoint = mode === "login" ? "/login" : "/signup";
+      if(mode === 'login'){
+        const res = await loginUser({email:email, password:password} as Auth);
+        const { token, user } = res.data; // assumes { user: { username, role }, token }
+        login({ username: user.username, role: user.role, token });
+        navigate(user.role === "admin" ? "/admin" : "/user");
+      }else{
+        registerUser({email:email, username:username, password:password} as Auth);
+        navigate('/login')
+      }
 
-      const res = await axios.post(`https://your-api.com${endpoint}`, {
-        email,
-        password,
-        ...(mode === "signup" && { username }),
-      });
-
-      const { token, user } = res.data; // assumes { user: { username, role }, token }
-
-      login({ username: user.username, role: user.role, token });
-      navigate(user.role === "admin" ? "/admin" : "/user");
     } catch (err: any) {
       setError(err.response?.data?.message || "Authentication failed");
     } finally {

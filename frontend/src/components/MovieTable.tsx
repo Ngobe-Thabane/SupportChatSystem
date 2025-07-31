@@ -1,13 +1,14 @@
 import axios from "axios";
 import { useEffect, useState } from "react"
 import { Link } from "react-router"
-import type { MovieData } from "../interfaces/Interface";
 import { Toast } from "./Toast";
+import type { Movie } from "../interfaces/Movies.interface";
+import { useAuthStore } from "../stores/useAuthStore";
 
 export function MovieTable(){
   const [movies, setMovies] = useState([]);
   const [movieDeleted, setMovieDeleted] = useState(false);
-  const token = localStorage.getItem('token');
+  const token = useAuthStore((state)=>state.user?.token);
   useEffect(()=>{
     const getMovies = async () =>{
 
@@ -31,7 +32,7 @@ export function MovieTable(){
     <section className="flex-1">
       <div className="flex justify-between px-5 my-4">
         <h1 className="text-3xl font-bold">MovieTime</h1>
-        <Link to={'/addMovies'} className="btn btn-primary" >Add Movie</Link>
+        <Link to={'/admin/movies'} className="btn btn-primary" >Add Movie</Link>
       </div>
       <div className="overflow-x-auto rounded-box border border-base-content/5 bg-base-10 mx-4 my-2 w-full">
         <table className="table">
@@ -59,7 +60,7 @@ export function MovieTable(){
 }
 
 
-function RowData({index, movie, token, movieDeleted}:{index:number, movie:MovieData, token:string, movieDeleted:(isDeleted:boolean)=>void}){
+function RowData({index, movie, token, movieDeleted}:{index:number, movie:Movie, token:string, movieDeleted:(isDeleted:boolean)=>void}){
   const [isDeleting, setIsDeleting] = useState(false);
   useEffect(()=>{
     if(isDeleting){
@@ -96,7 +97,7 @@ function RowData({index, movie, token, movieDeleted}:{index:number, movie:MovieD
           <div className="avatar">
             <div className="mask mask-squircle h-12 w-12">
               <img
-                src={movie.image_url}
+                src={movie.poster_url}
                 alt={movie.title}/>
             </div>
           </div>

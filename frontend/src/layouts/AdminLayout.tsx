@@ -1,14 +1,15 @@
 // layouts/AdminLayout.tsx
-import { Link, Outlet } from "react-router";
+import { Link, Outlet, useNavigate } from "react-router";
 import { useAuthStore } from "../stores/useAuthStore";
 // import { FiLogOut, FiUsers, FiFilm, FiMessageCircle, FiStar, FiSettings, FiGrid } from "react-icons";
 
 export default function AdminLayout() {
   const user = useAuthStore((state) => state.user);
+  const navigate = useNavigate();
   const logout = useAuthStore((state) => state.logout);
 
   return (
-    <div className="flex min-h-screen bg-base-200 text-base-content">
+    <div className="flex h-screen bg-base-200 text-base-content">
       {/* Sidebar */}
       <aside className="w-64 bg-base-100 shadow-lg p-4 hidden md:flex flex-col justify-between">
         <div>
@@ -22,7 +23,6 @@ export default function AdminLayout() {
             </div>
             <div>
               <p className="font-semibold">{user?.username}</p>
-              <span className="badge badge-outline badge-sm">Admin</span>
             </div>
           </div>
 
@@ -31,25 +31,26 @@ export default function AdminLayout() {
               Dashboard
             </Link>
             <Link to="/admin/catalog" className="btn btn-ghost justify-start">
-              Catalog
+              Movies
             </Link>
             <Link to="/admin/users" className="btn btn-ghost justify-start">
-               Users
+               Top Movies
             </Link>
             <Link to="/admin/comments" className="btn btn-ghost justify-start">
-              Comments
+              Bookings per Theater
             </Link>
             <Link to="/admin/reviews" className="btn btn-ghost justify-start">
-              Reviews
-            </Link>
-            <Link to="/admin/settings" className="btn btn-ghost justify-start">
-              Settings
+              Showtimes
             </Link>
           </nav>
         </div>
 
         <div>
-          <button onClick={logout} className="btn btn-sm btn-outline w-full mt-4">
+          <button onClick={()=> {
+            logout();
+            navigate("/");
+
+            }} className="btn btn-sm btn-outline w-full mt-4">
             Logout
           </button>
         </div>
