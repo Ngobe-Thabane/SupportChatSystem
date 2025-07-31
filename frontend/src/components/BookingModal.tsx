@@ -1,21 +1,8 @@
-import React from 'react';
+import type { BookingModalProps } from "../interfaces/Booking.interface";
 
-interface BookingModalProps {
-  isOpen: boolean;
-  cinemaName: string;
-  selectedCount: number;
-  onConfirm: () => void;
-  onClose: () => void;
-}
+export default async function BookingModal({confirmBooking}:{confirmBooking:BookingModalProps}){
 
-const BookingModal: React.FC<BookingModalProps> = ({
-  isOpen,
-  cinemaName,
-  selectedCount,
-  onConfirm,
-  onClose,
-}) => {
-  if (!isOpen) return null;
+  if (!confirmBooking.isOpen) return null;
 
   return (
     <>
@@ -24,13 +11,13 @@ const BookingModal: React.FC<BookingModalProps> = ({
         <div className="modal-box">
           <h3 className="font-bold text-lg">Confirm Your Booking</h3>
           <p className="py-4">
-            You're booking {selectedCount} seat{selectedCount > 1 ? 's' : ''} at {cinemaName}.
+            You're booking {confirmBooking.selectedCount} seat{confirmBooking.selectedCount > 1 ? 's' : ''} at {confirmBooking.cinemaName}.
           </p>
           <div className="modal-action">
-            <button className="btn btn-outline" onClick={onClose}>
+            <button className="btn btn-outline" onClick={confirmBooking.onClose}>
               Cancel
             </button>
-            <button className="btn btn-primary" onClick={onConfirm}>
+            <button className="btn btn-primary" onClick={confirmBooking.onConfirm}>
               Confirm
             </button>
           </div>
@@ -39,5 +26,3 @@ const BookingModal: React.FC<BookingModalProps> = ({
     </>
   );
 };
-
-export default BookingModal;

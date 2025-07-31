@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import MovieCard from '../components/MovieDeatilsHeroSection';
+import MovieCard from '../components/MovieDeatil';
 import BookingModal from '../components/BookingModal';
 import type { Movie } from '../interfaces/Movies.interface';
 import type { ShowtTimes } from '../interfaces/Showtimes.iterface';

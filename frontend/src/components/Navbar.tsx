@@ -1,17 +1,8 @@
-// components/Navbar.tsx
-import { Link, Outlet, useNavigate } from "react-router";
+import { Link, Outlet} from "react-router";
 import { useAuthStore } from "../stores/useAuthStore";
 
 export default function Navbar() {
   const user = useAuthStore((state) => state.user);
-  const logout = useAuthStore((state) => state.logout);
-  const navigate = useNavigate();
-
-  const handleLogout = () => {
-    logout();
-    navigate("/login");
-  };
-
   return (
     <>
       <div className="navbar bg-base-100 shadow-sm">
