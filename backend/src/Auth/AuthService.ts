@@ -47,7 +47,7 @@ export async function loginUser(email:string, password:string): Promise<LoginRes
 
     const token = jwt.sign( userPayload, process.env.JWT_SECRET as string);
 
-    return { success: true, token: token }
+    return { success: true, token: token, user:{username:userPayload.name, role:userPayload.role, name:userPayload.name, email:userPayload.email}}
   }
 
   catch(err){

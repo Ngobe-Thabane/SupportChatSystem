@@ -11,5 +11,5 @@ export type RegisterResponse =
 
 
 export type LoginResponse =
-  | { success: true; token: string }
+  | { success: true; token: string, user:{} }
   | { success: false; error: "user_not_found" | "invalid_password" | "internal_error" };

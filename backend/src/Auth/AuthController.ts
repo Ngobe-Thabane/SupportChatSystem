@@ -23,7 +23,7 @@ export async function loginController(req : Request, res: Response){
     }
   }
 
-  return res.status(200).send({token: result.token});
+  return res.status(200).send({token: result.token, user:result.user});
 
 }
 
