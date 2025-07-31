@@ -4,11 +4,11 @@ interface MovieCardProps {
   posterUrl: string;
 }
 
-const MovieCard: React.FC<MovieCardProps> = ({ posterUrl }) => {
+export default function MovieCard({ posterUrl }:{posterUrl:MovieCardProps}){
   return (
     <div className="card lg:card-side bg-base-100/10 shadow w-full">
       <figure className="relative lg:w-1/3 -mt-20 ml-4">
-        <img src={posterUrl} alt="Movie Poster" className="rounded-xl border-4 border-base-100 shadow-md" />
+        <img src={posterUrl.posterUrl} alt="Movie Poster" className="rounded-xl border-4 border-base-100 shadow-md" />
       </figure>
       <div className="card-body">
         <h2 className="card-title text-3xl">The Batman</h2>
@@ -31,5 +31,3 @@ const MovieCard: React.FC<MovieCardProps> = ({ posterUrl }) => {
     </div>
   );
 };
-
-export default MovieCard;

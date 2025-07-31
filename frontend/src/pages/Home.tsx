@@ -1,11 +1,11 @@
-import { LandingPage } from "../components/LandingPage";
-import { MovieCard } from "../components/MovieCard";
+import HeroCarousel from "../components/LandingPage";
+import { MovieGrid } from "../components/MovieGrid";
 
 export default function Home(){
     return (
         <>
-            <LandingPage/>
-            <MovieCard/>
+            <HeroCarousel/>
+            <MovieGrid/>
         </>
     )
 }
