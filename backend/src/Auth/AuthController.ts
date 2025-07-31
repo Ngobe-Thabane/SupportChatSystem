@@ -29,13 +29,13 @@ export async function loginController(req : Request, res: Response){
 
 export async function registerController(req: Request, res: Response){
 
-  const userData = req.body as Register;
+  const {email, username, password} = req.body;
 
-  if(!userData.email || !userData.username || !userData.password ){
+  if(!email || !username || !password ){
     return res.status(400).send({message: "All fields must b field"});
   }
 
-  const result = await registerUser(userData);
+  const result = await registerUser(email, username, password);
 
   if(!result.success){
     switch(result.error){

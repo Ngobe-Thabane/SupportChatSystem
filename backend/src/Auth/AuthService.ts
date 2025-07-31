@@ -6,18 +6,18 @@ import { config } from 'dotenv';
 
 config({path: 'src/configs/.env', encoding:'utf8'});
 
-export async function registerUser(userData: Register): Promise<RegisterResponse>{
+export async function registerUser(email:string, username:string, password:string): Promise<RegisterResponse>{
 
   try{
-    const user = await findUserByEmail(userData.email);
+    const user = await findUserByEmail(email);
   
     if(user.rows.length !== 0){
       return {success: false, error: "user_exists"};
     }
     
     const salt = await bcrypt.genSalt(10);
-    const passwordHash = await bcrypt.hash(userData.password, salt);
-    await createUser({...userData, password: passwordHash});
+    const passwordHash = await bcrypt.hash(password, salt);
+    await createUser({email:email, username:username, password: passwordHash});
 
     return { success: true}
 
