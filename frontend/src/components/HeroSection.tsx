@@ -34,7 +34,6 @@ const slides = [
 export default function HeroCarousel() {
   const [currentSlide, setCurrentSlide] = useState(0);
 
-  // Auto-slide every 5 seconds
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % slides.length);

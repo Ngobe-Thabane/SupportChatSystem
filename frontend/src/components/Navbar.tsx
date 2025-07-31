@@ -16,7 +16,7 @@ export default function Navbar() {
     <>
       <div className="navbar bg-base-100 shadow-sm">
         <div className="flex-1">
-          <Link to="/" className="btn btn-ghost text-xl">daisyUI</Link>
+          <Link to="/" className="btn btn-ghost text-xl">Movie Time</Link>
         </div>
 
         <div className="flex gap-2 items-center">
@@ -37,23 +37,6 @@ export default function Navbar() {
                   />
                 </div>
               </div>
-              <ul
-                tabIndex={0}
-                className="menu menu-sm dropdown-content bg-base-100 rounded-box z-10 mt-3 w-52 p-2 shadow"
-              >
-                <li>
-                  <Link to="/profile" className="justify-between">
-                    Profile
-                    <span className="badge">New</span>
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/settings">Settings</Link>
-                </li>
-                <li>
-                  <button onClick={handleLogout}>Logout</button>
-                </li>
-              </ul>
             </div>
           )}
         </div>

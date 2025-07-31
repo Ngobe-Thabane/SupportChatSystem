@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react"
-import { MovieCard } from "../components/MovieCard";
-import { useAuthStore } from "../stores/useAuthStore";
+import { MovieCard } from "../../components/MovieCard";
+import { useAuthStore } from "../../stores/useAuthStore";
 
 export function Movies(){
 

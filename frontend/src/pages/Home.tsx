@@ -1,5 +1,5 @@
-import HeroCarousel from "../components/LandingPage";
-import { MovieGrid } from "../components/MovieGrid";
+import HeroCarousel from "../components/HeroSection";
+import { MovieGrid } from "../shared/MovieList";
 
 export default function Home(){
     return (

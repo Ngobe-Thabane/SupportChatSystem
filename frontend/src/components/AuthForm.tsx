@@ -32,7 +32,7 @@ export default function AuthForm() {
         navigate(user.role === "admin" ? "/admin" : "/user");
       }else{
         registerUser({email:email, username:username, password:password} as Auth);
-        navigate('/login')
+        setMode('login');
       }
 
     } catch (err: any) {

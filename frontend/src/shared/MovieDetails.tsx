@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
-import MovieCard from '../components/MovieBackgoundCard';
-import CinemaList from '../components/CinemaList';
+import MovieCard from '../components/MovieDeatilsHeroSection';
 import BookingModal from '../components/BookingModal';
 import type { Movie } from '../interfaces/Movies.interface';
 import type { ShowtTimes } from '../interfaces/Showtimes.iterface';
@@ -66,14 +65,6 @@ export default function MovieDetails(){
 
       <div className="max-w-4xl mx-auto px-6 mt-12">
         <h2 className="text-2xl font-semibold mb-4">Choose a Cinema</h2>
-        <CinemaList
-          cinemas={movieShowtimes}
-          activeCinemaId={activeCinemaId}
-          selectedSeats={selectedSeats}
-          onCinemaSelect={handleCinemaSelect}
-          onSeatToggle={handleSeatToggle}
-          onBookClick={handleBookClick}
-        />
       </div>
 
       <BookingModal

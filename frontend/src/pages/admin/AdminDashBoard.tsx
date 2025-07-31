@@ -1,4 +1,3 @@
-// pages/AdminDashboard.tsx
 
 import { Link } from "react-router";
 
@@ -6,7 +5,7 @@ import { Link } from "react-router";
 export default function AdminDashboard() {
   return (
     <div className="min-h-screen bg-base-200 text-base-content p-6">
-      <div>
+      <div className="flex items-center justify-between">
         <h1 className="text-3xl font-bold mb-6">Admin Dashboard</h1>
         <Link to={'/admin/movies'} className="btn btn-primary">Add items</Link>
       </div>
