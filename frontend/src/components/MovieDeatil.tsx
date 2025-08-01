@@ -2,8 +2,8 @@ import type { Movie } from '../interfaces/Movies.interface';
 
 export default function MovieCard({ movie }:{movie:Movie}){
   return (
-    <div className="card lg:card-side bg-base-100 shadow w-full">
-      <figure className="relative lg:w-1/3 -mt-20 ml-4">
+    <div className="card lg:card-side bg-base-100 shadow w-full  bg-gradient-to-t p-6 from-transparent to-[#252525ff]">
+      <figure className="relative lg:w-1/3  -mt-20 ml-4">
         <img src={movie.poster_url} alt="Movie Poster" className="rounded-xl border-4 border-base-100 shadow-md" />
       </figure>
       <div className="card-body ">

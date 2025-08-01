@@ -1,6 +1,7 @@
 // layouts/UserLayout.tsx
 import { Link, Outlet, useNavigate } from "react-router";
 import { useAuthStore } from "../stores/useAuthStore";
+import Home from "../pages/Home";
 
 export default function UserLayout() {
   const user = useAuthStore((state) => state.user);
@@ -50,8 +51,10 @@ export default function UserLayout() {
       </aside>
 
       {/* Main content */}
-      <main className="flex-1 p-6 overflow-y-auto">
-        <Outlet />
+      <main className="flex-1 overflow-y-auto">
+        {
+          user?.role === 'user' ? <Outlet /> : <Home/>
+        }
       </main>
     </div>
   );

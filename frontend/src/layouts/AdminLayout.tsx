@@ -1,6 +1,7 @@
 // layouts/AdminLayout.tsx
 import { Link, Outlet, useNavigate } from "react-router";
 import { useAuthStore } from "../stores/useAuthStore";
+import Home from "../pages/Home";
 // import { FiLogOut, FiUsers, FiFilm, FiMessageCircle, FiStar, FiSettings, FiGrid } from "react-icons";
 
 export default function AdminLayout() {
@@ -30,14 +31,11 @@ export default function AdminLayout() {
             <Link to="/admin" className="btn btn-ghost justify-start">
               Dashboard
             </Link>
-            <Link to="/admin/catalog" className="btn btn-ghost justify-start">
+            <Link to="/admin/movies" className="btn btn-ghost justify-start">
               Movies
             </Link>
-            <Link to="/admin/users" className="btn btn-ghost justify-start">
-               Top Movies
-            </Link>
             <Link to="/admin/comments" className="btn btn-ghost justify-start">
-              Bookings per Theater
+              Theaters
             </Link>
             <Link to="/admin/reviews" className="btn btn-ghost justify-start">
               Showtimes
@@ -57,8 +55,10 @@ export default function AdminLayout() {
       </aside>
 
       {/* Main content */}
-      <main className="flex-1 p-6 overflow-y-auto">
-        <Outlet />
+      <main className="flex-1 p-5 overflow-y-auto">
+        {
+          user?.role === 'admin' ? <Outlet /> : <Home/>
+        }
       </main>
     </div>
   );

@@ -19,12 +19,12 @@ export default function MovieDetails(){
 
 
   return (
-    <div className="bg-base-100 min-h-screen pb-20">
+    <div className="bg-base-100 min-h-screen ">
       <div
-        className="w-full h-[400px] bg-cover bg-center relative"
+        className="w-full h-[300px] bg-cover bg-center relative"
         style={{ backgroundImage: `url(${movieState.state.poster_url})` }}
       >
-        <div className="absolute inset-0 bg-black/60" />
+   <div className="absolute inset-0 bg-black/60 " />
       </div>
 
       <div className="max-w-7xl mx-auto px-6 md:px-12 relative -mt-32 z-10">

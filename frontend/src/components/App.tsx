@@ -9,6 +9,7 @@ import UserLayout from '../layouts/UserLayout';
 import UserDashboard from '../pages/user/UserDashboard';
 import { MovieGrid } from '../shared/MovieList';
 import { Movies } from '../pages/admin/MoviesAPIs';
+import MovieSchedulePage from '../pages/admin/MovieSchedule';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
         <Route path='/admin' element={<AdminLayout/>}>
           <Route index element={<AdminDashboard />} />
           <Route path='/admin/movies' element={<Movies/>}/>
+          <Route path='/admin/addMovie' element={<MovieSchedulePage/>}/>
         </Route>
 
         <Route path='/user' element={<UserLayout/>}>

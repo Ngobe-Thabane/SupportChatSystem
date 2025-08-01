@@ -25,6 +25,19 @@ const slides = [
     }
 ];
 
+const genreMap = {
+  27: "Horror",
+  53: "Thriller",
+  18: "Drama",
+  80: "Crime",
+  9648: "Mystery",
+  10751: "Family",
+  878: "Sci-Fi",
+  35: "Comedy",
+  12: "Adventure"
+};
+
+
 export default function HeroCarousel() {
   const [currentSlide, setCurrentSlide] = useState(0);
 
@@ -36,42 +49,49 @@ export default function HeroCarousel() {
     return () => clearInterval(interval);
   }, []);
 
-  const prevSlide = () => {
-    setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
-  };
-
-  const nextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % slides.length);
-  };
-
   const slide = slides[currentSlide];
 
   return (
-    <div className="relative w-full min-h-screen">
-      <div
-        className={`hero min-h-screen transition-all bg-center duration-700 z-10`}
-        style={{backgroundImage:`url(${slide.image})`, backgroundSize:'cover', backgroundPosition:'center'}}
+    <div className="p-6 md:p-10 h-[80vh] w-full flex flex-col bg-bottom   text-white z-10 inset-0 bg-gradient-to-b from-[#252525ff] to-[#25252500] backdrop-blur-sm"
+    >
+  {/* Movie Title */}
+  <img src={slide.image} className="absolute inset-0 w-full h-full object-cover z-0 opacity-70 " />
+    <div className="absolute inset-0 bg-gradient-to-l p-6 from-[#25252500] to-[#252525ff] z-10 flex flex-col justify-end">
+
+  <h1 className="text-4xl md:text-5xl font-extrabold mb-4 leading-tight">
+    {slide.title}
+  </h1>
+
+  {/* Genre tags */}
+  {slide.genres?.length > 0 && (
+    <div className="flex flex-wrap gap-2 mb-4">
+      {slide.genres.map((g, i) => (
+        <span
+          key={i}
+          className="bg-white/10 text-white text-xs font-medium px-3 py-1 rounded-full"
         >
-        <div className="hero-overlay bg-black/60 bg-opacity-60" ></div>
-        <div className="hero-content text-white text-left max-w-2xl">
-          <div>
-            <h1 className="text-5xl font-bold mb-2">{slide.title}</h1>
-            <p className="text-sm uppercase text-primary font-semibold mb-4">
-              {/* {slide.genres} */}
-            </p>
-            <p className="mb-6">{slide.description}</p>
-            <button className="btn btn-primary">Book Now</button>
-          </div>
-        </div>
-      </div>
-      <div className="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2 z-10">
-        <button onClick={prevSlide} className="btn btn-circle">
-          ❮
-        </button>
-        <button onClick={nextSlide} className="btn btn-circle">
-          ❯
-        </button>
-      </div>
+          {typeof g === "string" ? g : genreMap[g]}
+        </span>
+      ))}
     </div>
+  )}
+
+  {/* Movie Overview */}
+  <p className="text-sm md:text-base text-gray-100 mb-6 w-[60%]">
+    {slide.description}
+  </p>
+
+  {/* Actions */}
+  <div className="flex flex-wrap gap-4">
+    <button className="btn btn-primary text-white">Book Now</button>
+    <button className="btn btn-outline border-white text-white hover:bg-white/10">
+      Watch Trailer
+    </button>
+  </div>
+</div>
+</div>
+
+
+
   );
 }
