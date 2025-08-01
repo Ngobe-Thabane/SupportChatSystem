@@ -5,6 +5,14 @@ export type Cinema = {
   name: string;
   location: string;
 };
+export type Genres = {
+  genre_id:number,
+  name:string
+}
+type Genre ={
+  genreList :Genres[],
+  setGenres: (genres:Genres[]) => void
+}
 
 type Theater = {
   theatersList:Cinema[]|null
@@ -15,3 +23,8 @@ export const useTheaterList = create<Theater>((set)=>({
 	theatersList:null,
 	seTheaters:(theater:Cinema[]) => set({theatersList:theater})
 }))
+
+export const useGenres = create<Genre>((set)=>({
+  genreList: [],
+  setGenres: (genres:Genres[]) => set({genreList:genres})
+}));

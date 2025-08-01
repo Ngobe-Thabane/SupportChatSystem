@@ -1,14 +1,16 @@
 
 import { useLocation } from "react-router";
-import { useTheaterList, type Cinema } from "../../stores/useTheaterStore";
+import { useGenres, useTheaterList, type Cinema } from "../../stores/useMovieStore";
 import { useState } from "react";
 
 export default function MovieSchedulePage(){
   const {state} = useLocation();
   const cinemas = useTheaterList((state)=>state.theatersList) as Cinema[];
+  const genres = useGenres((state)=>state.genreList);
   const [selectedCinema, setSelectedCinema] = useState<string>("");
   const [timeInput, setTimeInput] = useState<string>("");
   const [scheduledTimes, setScheduledTimes] = useState<{ cinema: Cinema; time: string }[]>([]);
+  const [moveShowTimes,setMovieShowTimes] = useState({movie:state, scheduledTimes:scheduledTimes});
 
   const handleAddTime = () => {
     if (!selectedCinema || !timeInput) return;
@@ -22,6 +24,7 @@ export default function MovieSchedulePage(){
     if (exists) return;
 
     setScheduledTimes([...scheduledTimes, { cinema, time: timeInput }]);
+    setMovieShowTimes({movie:state,scheduledTimes:scheduledTimes});
     setTimeInput("");
   };
 
@@ -36,9 +39,9 @@ export default function MovieSchedulePage(){
       <h1 className="text-2xl font-bold mb-4">ShowTime Schedule</h1>
       <div className="flex">
         <div className="w-[400px] h-[500px]">
-          <img src={state.poster_url} alt=""  className="h-full"/>
+          <img src={state.poster_url} alt="" className="h-full"/>
         </div>
-        <div className="p-6 max-w-5xl mx-auto">
+        <div className="max-w-5xl mx-auto w-[700px]">
 
           <div className="flex flex-col justify-between gap-2 mb-4">
             <h2 className="text-3xl font-bold">{state.title}</h2>
@@ -46,14 +49,17 @@ export default function MovieSchedulePage(){
           </div>
 
           <div className="text-gray-500 mb-2">
-            <span className="font-semibold">Genres:</span> Sci-Fi, Action
+            <span className="font-semibold">Genres:</span>
+            {
+              state.genres.map((genre:number)=>{
+                return <span className="badge mx-1 bg-blue-700/30 text-center">{genres.find((genreDB)=>genreDB.genre_id ===  genre)?.name}</span>
+              })
+            }
           </div>
           <div className="text-gray-500 mb-2">
-            <span className="font-semibold">Release Date :</span> 07 Sep 2023
+            <span className="font-semibold">Release Date :</span> {state.release_date}
           </div>
-          <p className=" text-gray-200 mb-6">
-            A skilled thief is given a chance at redemption if he can successfully plant an idea into a target's subconscious.
-          </p>
+          <p className="text-sm text-gray-200 mb-6">{state.description}</p>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
             <div className="form-control flex flex-col gap-3">
@@ -125,9 +131,12 @@ export default function MovieSchedulePage(){
           )}
 
           {/* Save Button */}
-          <div className="form-control mt-8">
-            <button className="btn btn-success w-full max-w-sm mx-auto">Save Schedule</button>
-          </div>
+          {
+            scheduledTimes.length > 0 &&
+            <div className="form-control mt-8">
+              <button className="btn btn-success w-full max-w-sm mx-auto">Schedule Showtime</button>
+            </div>
+          }
         </div>
       </div>
     </>

@@ -40,3 +40,8 @@ export async function getTheaterList() {
     const {data} = await axios.get('http://localhost:5000/theaters', options);
     return data.theaters;
 }
+
+export async function getGenres() {
+    const {data} = await axios.get('http://localhost:5000/genres', options);
+    return data;
+}

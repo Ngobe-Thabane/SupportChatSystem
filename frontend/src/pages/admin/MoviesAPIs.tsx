@@ -7,7 +7,6 @@ export function Movies(){
 
   const [movies, setMovies] = useState([]);
   const token = useAuthStore((state)=>state.user?.token);
-  console.log(token)
   useEffect(()=>{
     const getMovies = async () =>{
       
@@ -30,8 +29,9 @@ export function Movies(){
     <div className="grid grid-cols-4  gap-3 p-4 my-2" >
       {
         movies.map((movie)=>{
-          const {title, overview, genres, poster_path} = movie;
-          return (<MovieCard movie={{title:title, description:overview,  genres:genres,poster_url:`https://image.tmdb.org/t/p/original/${poster_path}`}} />)
+          const {title, overview, genre_ids, poster_path,release_date} = movie;
+          console.log(movie)
+          return (<MovieCard movie={{title:title,release_date:release_date, description:overview,  genres:genre_ids,poster_url:`https://image.tmdb.org/t/p/original/${poster_path}`}} />)
         })
       }
     </div>

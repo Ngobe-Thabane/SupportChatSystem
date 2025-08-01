@@ -5,8 +5,9 @@ export interface Movie{
     title:string,
     poster_url:string,
     description:string,
-    genres?:Array<string>
-    total_bookings?:string
+    genres?:Array<number>
+    total_bookings?:string,
+    release_date: string
 }
 
 export interface AdminStats{
