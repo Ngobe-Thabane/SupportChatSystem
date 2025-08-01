@@ -4,7 +4,7 @@ export async function addShowTime(movie_id: string, theater_id: string, show_dat
   const query = `
     INSERT INTO showtimes (movie_id, theater_id, show_date, start_time)
     VALUES ($1, $2, $3, to_timestamp($4)::time)
-    RETURNING *;
+    RETURNING theater_id;
   `;
   const values = [movie_id, theater_id, show_date, start_time];
   const result = await db.query(query, values);

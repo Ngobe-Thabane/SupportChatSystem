@@ -1,13 +1,13 @@
 import { Request, Response } from "express";
-import { addMovie, deleteMovie, getMovie, getMovies, addMovieGenres } from "../../repository/MoviesRepository.ts";
+import { addMovie, deleteMovie, getMovie, getMovies, addMovieGenres, getGenres } from "../../repository/MoviesRepository.ts";
 import { getAdminDashboardStats } from "../../repository/AdminDashBoard.ts";
+import { addShowTime } from "../../repository/ShowtimesRepository.ts";
 
 
 export async function getMoviesController(req: Request, res:Response){
   const movies = await getMovies();
   return res.status(200).send(movies.rows);
 }
-
 
 export async function getMovieController(req:Request, res:Response){
 
@@ -20,6 +20,12 @@ export async function getMovieController(req:Request, res:Response){
   return res.status(200).send(movie.rows);
 }
 
+export async function getGenresControllers(req:Request, res:Response) {
+  const genres = await getGenres();
+  return res.status(200).send(genres.rows);
+}
+
+
 export async function deleteMovieController(req:Request, res:Response) {
   const { id } = req.body
   if(!id) return res.status(400).send({message:'Bad Request'});
@@ -29,16 +35,23 @@ export async function deleteMovieController(req:Request, res:Response) {
 
 export async function addMovieController(req:Request, res:Response){
   
-  const {title, poster_url, description, genres} = req.body;
+  const {moveiShowTime, scheduleShowTimes} = req.body;
 
-  if(!title || !poster_url || !description || !genres ){
+  if(! moveiShowTime.title || ! moveiShowTime.poster_url || !moveiShowTime.description || !moveiShowTime.genres ){
     return res.status(400).send({message: 'Missing data'})
   }
 
-  const movie_id =  await addMovie(title, description, poster_url);
+  const movie_id =  await addMovie( moveiShowTime.title, moveiShowTime.description, moveiShowTime.poster_url);
   
-  addMovieGenres(genres, movie_id.rows[0].movie_id);
-  return res.status(201).send({message:"MovieAdded"});
+  addMovieGenres( moveiShowTime.genres, movie_id.rows[0].movie_id);
+
+  if(!scheduleShowTimes.theater_id || !scheduleShowTimes.time || scheduleShowTimes.release_date){
+    addShowTime(movie_id.rows[0].movie_id, scheduleShowTimes.theater_id, scheduleShowTimes.release_date, scheduleShowTimes.time);
+  }else{
+    deleteMovie(movie_id.rows[0].movie_id);
+  }
+
+  return res.status(201).send({message:"MovieAdded", movie_id:movie_id.rows[0].movie_id});
 }
 
 export async function adminStatsController(req:Request, res:Response) {
