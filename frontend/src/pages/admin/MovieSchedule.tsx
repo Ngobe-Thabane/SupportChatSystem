@@ -1,24 +1,14 @@
-import React, { useState } from "react";
+
 import { useLocation } from "react-router";
-
-type Cinema = {
-  name: string;
-  location: string;
-};
-
-const cinemas: Cinema[] = [
-  { name: "Cinema 1", location: "Downtown" },
-  { name: "Cinema 2", location: "Uptown" },
-  { name: "Cinema 3", location: "City Mall" },
-];
+import { useTheaterList, type Cinema } from "../../stores/useTheaterStore";
+import { useState } from "react";
 
 export default function MovieSchedulePage(){
   const {state} = useLocation();
+  const cinemas = useTheaterList((state)=>state.theatersList) as Cinema[];
   const [selectedCinema, setSelectedCinema] = useState<string>("");
   const [timeInput, setTimeInput] = useState<string>("");
-  const [scheduledTimes, setScheduledTimes] = useState<
-    { cinema: Cinema; time: string }[]
-  >([]);
+  const [scheduledTimes, setScheduledTimes] = useState<{ cinema: Cinema; time: string }[]>([]);
 
   const handleAddTime = () => {
     if (!selectedCinema || !timeInput) return;
@@ -26,7 +16,6 @@ export default function MovieSchedulePage(){
     const cinema = cinemas.find((c) => c.name === selectedCinema);
     if (!cinema) return;
 
-    // Prevent duplicates
     const exists = scheduledTimes.some(
       (entry) => entry.cinema.name === cinema.name && entry.time === timeInput
     );
@@ -50,27 +39,23 @@ export default function MovieSchedulePage(){
           <img src={state.poster_url} alt=""  className="h-full"/>
         </div>
         <div className="p-6 max-w-5xl mx-auto">
-          {/* Header */}
+
           <div className="flex flex-col justify-between gap-2 mb-4">
             <h2 className="text-3xl font-bold">{state.title}</h2>
             <div className="badge badge-secondary text-sm p-2">PG-13</div>
           </div>
 
-          {/* Genre */}
           <div className="text-gray-500 mb-2">
             <span className="font-semibold">Genres:</span> Sci-Fi, Action
           </div>
           <div className="text-gray-500 mb-2">
             <span className="font-semibold">Release Date :</span> 07 Sep 2023
           </div>
-          {/* Synopsis */}
           <p className=" text-gray-200 mb-6">
             A skilled thief is given a chance at redemption if he can successfully plant an idea into a target's subconscious.
           </p>
 
-          {/* Scheduling Inputs */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-            {/* Cinema Selector */}
             <div className="form-control flex flex-col gap-3">
               <label className="label">
                 <span className="label-text">Select Cinema</span>
@@ -83,7 +68,7 @@ export default function MovieSchedulePage(){
                 <option value="" disabled>
                   Choose a cinema
                 </option>
-                {cinemas.map((cinema) => (
+                {cinemas && cinemas.map((cinema) => (
                   <option key={cinema.name} value={cinema.name}>
                     {cinema.name} ({cinema.location})
                   </option>
@@ -103,7 +88,7 @@ export default function MovieSchedulePage(){
                   value={timeInput}
                   onChange={(e) => setTimeInput(e.target.value)}
                 />
-                <button type="button" className="btn btn-primary" onClick={handleAddTime}>
+                <button type="button" className={`btn btn-primary disabled:opacity-50 disabled:cursor-not-allowed`} disabled={!selectedCinema && !timeInput} onClick={handleAddTime}>
                   Add
                 </button>
               </div>
@@ -124,7 +109,8 @@ export default function MovieSchedulePage(){
                       <p className="font-medium">
                         {entry.cinema.name} <span className="text-sm text-gray-500">({entry.cinema.location})</span>
                       </p>
-                      <p className="text-sm text-gray-600">Show Time: {entry.time}</p>
+                      <p className="text-sm text-gray-600">Show Time:      
+                        {entry.time}</p>
                     </div>
                     <button
                       onClick={() => handleRemoveTime(index)}

@@ -1,9 +1,8 @@
-import { Link, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 import type { Movie } from "../interfaces/Movies.interface";
 import { useAuthStore } from "../stores/useAuthStore";
 
 export function MovieCard({movie}:{movie:Movie}){
-   const user = useAuthStore((state) => state.user);
    const role = useAuthStore((state) => state.user?.role);
    const navigate = useNavigate();
   return (

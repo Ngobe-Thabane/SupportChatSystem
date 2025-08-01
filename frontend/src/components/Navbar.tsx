@@ -3,6 +3,7 @@ import { useAuthStore } from "../stores/useAuthStore";
 
 export default function Navbar() {
   const user = useAuthStore((state) => state.user);
+  
   return (
     <>
       <div className="navbar bg-base-100/20 backdrop-blur-md shadow-sm absolute z-50">

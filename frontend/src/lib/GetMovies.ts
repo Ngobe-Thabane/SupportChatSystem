@@ -2,6 +2,7 @@ import axios from "axios";
 import type { Movie } from "../interfaces/Movies.interface";
 
 export const options = {headers:{"Content-Type":"application/json"}}
+
 export async function getMovies(){
 
     const movies = await axios.get('http://localhost:5000/movies', options)
@@ -33,4 +34,9 @@ export async function addMovie(movie:Movie, token:string) {
         }
     });
     return addMovie;
+}
+
+export async function getTheaterList() {
+    const {data} = await axios.get('http://localhost:5000/theaters', options);
+    return data.theaters;
 }

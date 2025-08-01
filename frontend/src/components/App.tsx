@@ -10,8 +10,23 @@ import UserDashboard from '../pages/user/UserDashboard';
 import { MovieGrid } from '../shared/MovieList';
 import { Movies } from '../pages/admin/MoviesAPIs';
 import MovieSchedulePage from '../pages/admin/MovieSchedule';
+import { useEffect } from 'react';
+import { useTheaterList } from '../stores/useTheaterStore';
+import { getTheaterList } from '../lib/GetMovies';
 
 function App() {
+
+  const setTheaters = useTheaterList((state)=>state.seTheaters);
+  
+  useEffect(()=>{
+    const getTheaters = async ()=>{
+      const theater = await getTheaterList();
+      console.log(theater)
+      setTheaters(theater);
+    }
+    getTheaters();
+  })
+
   return (
     <BrowserRouter>
       <Routes>
