@@ -1,16 +1,18 @@
 
 import { useLocation } from "react-router";
 import { useGenres, useTheaterList, type Cinema } from "../../stores/useMovieStore";
-import { useState } from "react";
+import {useState } from "react";
+import { addMovie } from "../../lib/GetMovies";
+import { useAuthStore } from "../../stores/useAuthStore";
 
 export default function MovieSchedulePage(){
   const {state} = useLocation();
   const cinemas = useTheaterList((state)=>state.theatersList) as Cinema[];
   const genres = useGenres((state)=>state.genreList);
+  const token = useAuthStore((state)=>state.user?.token);
   const [selectedCinema, setSelectedCinema] = useState<string>("");
   const [timeInput, setTimeInput] = useState<string>("");
   const [scheduledTimes, setScheduledTimes] = useState<{ cinema: Cinema; time: string }[]>([]);
-  const [moveShowTimes,setMovieShowTimes] = useState({movie:state, scheduledTimes:scheduledTimes});
 
   const handleAddTime = () => {
     if (!selectedCinema || !timeInput) return;
@@ -24,10 +26,20 @@ export default function MovieSchedulePage(){
     if (exists) return;
 
     setScheduledTimes([...scheduledTimes, { cinema, time: timeInput }]);
-    setMovieShowTimes({movie:state,scheduledTimes:scheduledTimes});
     setTimeInput("");
   };
 
+  const addMovieShowtime = ()=>{
+    const showtimes = scheduledTimes.map((times)=>{
+      return {
+        theater_id : times.cinema.theater_id,
+        location : times.cinema.location,
+        name: times.cinema.name,
+        time: times.time
+      }
+    })
+    addMovie(state, token as string, showtimes)
+  }
   const handleRemoveTime = (index: number) => {
     const updated = [...scheduledTimes];
     updated.splice(index, 1);
@@ -134,7 +146,7 @@ export default function MovieSchedulePage(){
           {
             scheduledTimes.length > 0 &&
             <div className="form-control mt-8">
-              <button className="btn btn-success w-full max-w-sm mx-auto">Schedule Showtime</button>
+              <button className="btn btn-success w-full max-w-sm mx-auto" onClick={addMovieShowtime} >Schedule Showtime</button>
             </div>
           }
         </div>

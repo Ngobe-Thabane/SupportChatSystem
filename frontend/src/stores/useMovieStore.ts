@@ -1,9 +1,10 @@
 import { create } from "zustand";
 
 export type Cinema = {
-  id:string;
+  theater_id:string;
   name: string;
   location: string;
+  time ?: string
 };
 export type Genres = {
   genre_id:number,

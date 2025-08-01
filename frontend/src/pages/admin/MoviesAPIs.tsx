@@ -30,7 +30,6 @@ export function Movies(){
       {
         movies.map((movie)=>{
           const {title, overview, genre_ids, poster_path,release_date} = movie;
-          console.log(movie)
           return (<MovieCard movie={{title:title,release_date:release_date, description:overview,  genres:genre_ids,poster_url:`https://image.tmdb.org/t/p/original/${poster_path}`}} />)
         })
       }

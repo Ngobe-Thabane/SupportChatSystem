@@ -10,7 +10,7 @@ export function MovieCard({movie}:{movie:Movie}){
 
   return (
     <>
-    <div className="m-4 mb-8 px-4 w-[260px] cursor-pointer" onClick={()=>{
+    <div className="m-4 mb-8 px-4 w-[260px] cursor-pointer w-full" onClick={()=>{
       if(role == 'user'){
         navigate('/user/moviedetails',{state:movie});
       }else{
