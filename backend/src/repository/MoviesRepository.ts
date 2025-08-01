@@ -6,7 +6,17 @@ export async function addMovie(title: string, description: string, poster_url:st
 }
 
 export async function getMovies() {
-  return await db.query(`SELECT m.movie_id, m.title, m.poster_url, m.description, ARRAY_AGG(g.name ORDER BY g.name) AS genres FROM movies m LEFT JOIN movie_genres mg ON m.movie_id=mg.movie_id LEFT JOIN genres g ON mg.genre_id=g.genre_id GROUP BY m.movie_id`, []);
+  return await db.query(`
+    SELECT 
+      m.movie_id, 
+      m.title, 
+      m.poster_url, 
+      m.description, 
+      ARRAY_AGG(g.genre_id ORDER BY g.genre_id) AS genres 
+      FROM movies m 
+      LEFT JOIN movie_genres mg ON m.movie_id=mg.movie_id 
+      LEFT JOIN genres g ON mg.genre_id=g.genre_id 
+      GROUP BY m.movie_id`, []);
 }
 
 export async function deleteMovie(movie_id:string) {

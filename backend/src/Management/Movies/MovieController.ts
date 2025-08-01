@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { addMovie, deleteMovie, getMovie, getMovies, addMovieGenres, getGenres } from "../../repository/MoviesRepository.ts";
 import { getAdminDashboardStats } from "../../repository/AdminDashBoard.ts";
 import { addShowTime } from "../../repository/ShowtimesRepository.ts";
+import { generateSeatsForShowtime } from "../../repository/Seats.ts";
 
 
 export async function getMoviesController(req: Request, res:Response){
@@ -35,18 +36,31 @@ export async function deleteMovieController(req:Request, res:Response) {
 
 export async function addMovieController(req:Request, res:Response){
   
-  const {moveiShowTime, scheduleShowTimes} = req.body;
-
-  if(! moveiShowTime.title || ! moveiShowTime.poster_url || !moveiShowTime.description || !moveiShowTime.genres ){
+  const {movie, showtimes} = req.body;
+  const {title, poster_url, description, genres} = movie;
+  
+  if(! title || ! poster_url || !description || !genres ){
     return res.status(400).send({message: 'Missing data'})
   }
 
-  const movie_id =  await addMovie( moveiShowTime.title, moveiShowTime.description, moveiShowTime.poster_url);
+  const movie_id =  await addMovie( title, description, poster_url);
   
-  addMovieGenres( moveiShowTime.genres, movie_id.rows[0].movie_id);
+  addMovieGenres( genres, movie_id.rows[0].movie_id);
 
-  if(!scheduleShowTimes.theater_id || !scheduleShowTimes.time || scheduleShowTimes.release_date){
-    addShowTime(movie_id.rows[0].movie_id, scheduleShowTimes.theater_id, scheduleShowTimes.release_date, scheduleShowTimes.time);
+  if(showtimes.length > 0){
+    showtimes.forEach(async(showtime:any)=>{
+      
+      const now = new Date();
+      const [hours, minutes] = showtime.time.split(":").map(Number);
+      now.setHours(hours);
+      now.setMinutes(minutes);
+      now.setSeconds(0);
+      now.setMilliseconds(0);
+      const timestamp = now.getTime();
+
+      const showTime = await addShowTime(movie_id.rows[0].movie_id, showtime.theater_id, showtime.release_date, timestamp);
+      await generateSeatsForShowtime(showTime.showtime_id);
+    })
   }else{
     deleteMovie(movie_id.rows[0].movie_id);
   }

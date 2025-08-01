@@ -19,9 +19,9 @@ declare module 'express' {
 }
 
 export function verifyToken(req:Request, res:Response, next:NextFunction) {
-  
+
   const SECRET_KEY = process.env.JWT_SECRET as string;
-  const authHeader = req.headers['authorization'];
+  const authHeader = req.headers['authorization'] as string;
   const token = authHeader && authHeader.split(' ')[1]; // Bearer <token>
 
   if (!token) {
