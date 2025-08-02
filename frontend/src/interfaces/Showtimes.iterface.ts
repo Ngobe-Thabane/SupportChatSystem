@@ -1,7 +1,7 @@
 export interface Seats{
     seat_id:string,
     seat_number:string,
-    isRerseved:string
+    is_reserved:string
 }
 
 export interface ShowtTimes{

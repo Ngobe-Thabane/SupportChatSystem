@@ -35,7 +35,8 @@ export default function MovieSchedulePage(){
         theater_id : times.cinema.theater_id,
         location : times.cinema.location,
         name: times.cinema.name,
-        time: times.time
+        time: times.time,
+        release_date:state.release_date
       }
     })
     addMovie(state, token as string, showtimes)

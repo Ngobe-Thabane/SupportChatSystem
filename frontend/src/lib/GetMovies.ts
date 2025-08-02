@@ -29,15 +29,14 @@ export async function getMovieShowTime(movie_id:string) {
 
 export async function addMovie(movie:Movie, token:string, showtimes:Cinema[]) {
     const data = {movie:movie, showtimes:showtimes}
-    console.log(data);
-    console.log(token);
-    // const addMovie = await axios.post('http://localhost:5000/movie',data, {
-    //     headers:{
-    //         "Content-Type":"application/json",
-    //         "Authorization" : token
-    //     }
-    // });
-    // return addMovie;
+
+    const addMovie = await axios.post('http://localhost:5000/movie',data, {
+        headers:{
+            "Content-Type":"application/json",
+            "Authorization" : `Bearer ${token}`
+        }
+    });
+    return addMovie;
 }
 
 export async function getTheaterList() {

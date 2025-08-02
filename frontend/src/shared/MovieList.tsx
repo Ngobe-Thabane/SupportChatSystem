@@ -14,12 +14,15 @@ export function MovieGrid(){
     }, []);
 
     return (
-        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            {
-                movies.map((movie)=>{
-                    return <MovieCard movie={movie}/>
-                })
-            }
-        </div>
+        <div className="grid mx-3 gap-2 justify-center grid-cols-[repeat(auto-fit,_minmax(250px,_1fr))]">
+        {
+            movies.map((movie) => (
+            <div key={movie.id}>
+                <MovieCard movie={movie} />
+            </div>
+            ))
+        }
+</div>
+
     )
 }

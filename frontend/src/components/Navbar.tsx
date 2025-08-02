@@ -17,7 +17,6 @@ export default function Navbar() {
           {!user ? (
             <>
               <Link to="/login" className="btn btn-outline btn-sm">Login</Link>
-              <Link to="/signup" className="btn btn-primary btn-sm">Sign Up</Link>
             </>
           ) : (
             <div className="dropdown dropdown-end">

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import MovieCard from '../components/MovieDeatil';
 import type { ShowtTimes } from '../interfaces/Showtimes.iterface';
 import { getMovieShowTime } from '../lib/GetMovies';
-import { useLocation } from 'react-router';
+import { Link, useLocation } from 'react-router';
 
 export default function MovieDetails(){
   const movieState = useLocation();
@@ -28,33 +28,9 @@ export default function MovieDetails(){
       </div>
 
       <div className="max-w-7xl mx-auto px-6 md:px-12 relative -mt-32 z-10">
-        <MovieCard movie={movieState.state} />
+        <MovieCard movie={movieState.state} movieShowtimes={movieShowtimes} />
       </div>
-
-      <div className="max-w-4xl mx-auto px-6 mt-12">
-        <h2 className="text-2xl font-semibold mb-4 text-center">Choose a Cinema</h2>
-      </div>
-      <div className='flex gap-4 px-10'>
-        {
-          movieShowtimes.map((show)=>{
-            return (
-              <div className='bg-base-300 p-2 rounded shadow cursor-pointer'>
-                <p className='text-lg bold'>{show.theater_name}</p>
-                <p className='text-sm text-gray-500'>{show.location}</p>
-              </div>
-            )
-          })
-        }
-      </div>
-      {/* <BookingModal
-        isOpen={isModalOpen}
-        cinemaName={
-          movieShowtimes.find((cinema) => cinema.showtime_id === activeCinemaId)?.theater_name || ''
-        }
-        selectedCount={selectedSeats.filter(Boolean).length}
-        onClose={() => setIsModalOpen(false)}
-        onConfirm={handleConfirmBooking}
-      /> */}
+    
     </div>
   );
 };
