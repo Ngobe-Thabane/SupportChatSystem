@@ -68,6 +68,7 @@ export async function addMovieController(req:Request, res:Response){
   return res.status(201).send({message:"MovieAdded", movie_id:movie_id.rows[0].movie_id});
 }
 
+
 export async function adminStatsController(req:Request, res:Response) {
 
   try{

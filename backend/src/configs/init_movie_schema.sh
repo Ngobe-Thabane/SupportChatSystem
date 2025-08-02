@@ -12,7 +12,7 @@ if [ "$1" = "drop" ]; then
   SQL_COMMANDS=$(
     cat <<EOF
 DROP TABLE users;
-DROP TABLE genres;
+DROP TABLE genres CASCADE;
 DROP TABLE movies CASCADE;
 DROP TABLE movie_genres;
 DROP TABLE theaters CASCADE;
