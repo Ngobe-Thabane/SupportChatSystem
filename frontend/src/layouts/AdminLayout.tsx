@@ -2,6 +2,7 @@
 import { Link, Outlet, useNavigate } from "react-router";
 import { useAuthStore } from "../stores/useAuthStore";
 import Home from "../pages/Home";
+import Footer from "../shared/Footer";
 
 export default function AdminLayout() {
   const user = useAuthStore((state) => state.user);
@@ -33,10 +34,10 @@ export default function AdminLayout() {
             <Link to="/admin/movies" className="btn btn-ghost justify-start">
               Movies
             </Link>
-            <Link to="/admin/comments" className="btn btn-ghost justify-start">
+            <Link to="/admin/theaters" className="btn btn-ghost justify-start">
               Theaters
             </Link>
-            <Link to="/admin/reviews" className="btn btn-ghost justify-start">
+            <Link to="/admin/showtimes" className="btn btn-ghost justify-start">
               Showtimes
             </Link>
           </nav>

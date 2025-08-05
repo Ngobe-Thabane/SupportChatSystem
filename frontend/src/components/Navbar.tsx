@@ -1,5 +1,6 @@
 import { Link, Outlet} from "react-router";
 import { useAuthStore } from "../stores/useAuthStore";
+import Footer from "../shared/Footer";
 
 export default function Navbar() {
   const user = useAuthStore((state) => state.user);
@@ -36,6 +37,7 @@ export default function Navbar() {
         </div>
       </div>
       <Outlet />
+      <Footer />
     </>
   );
 }

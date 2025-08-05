@@ -10,10 +10,10 @@ export async function getMovies(){
     return movies;
 }
 
-export async function getMovieShowtime() {
+export async function getMovieShowtimes() {
 
-    const moviesShowtimes = await axios.get('', options);
-    return moviesShowtimes;
+    const moviesShowtimes = await axios.get('http://localhost:5000/allShowTimes', options);
+    return moviesShowtimes.data.showTimes;
 }
 
 export async function getMovieShowTime(movie_id:string) {

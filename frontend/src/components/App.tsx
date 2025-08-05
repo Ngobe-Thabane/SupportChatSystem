@@ -12,6 +12,9 @@ import { useEffect } from 'react';
 import { getGenres, getTheaterList} from '../lib/GetMovies';
 import { useGenres, useTheaterList } from '../stores/useMovieStore';
 import { Bookings } from '../pages/user/Bookings';
+import ShowtimesTable from '../pages/admin/ShowtimesTable';
+import UsersTable from '../pages/admin/userTable';
+import TheatersTable from '../pages/admin/TheatersTable';
 
 
 function App() {
@@ -49,6 +52,9 @@ function App() {
           <Route index element={<AdminDashboard />} />
           <Route path='/admin/movies' element={<Movies/>}/>
           <Route path='/admin/addMovie' element={<MovieSchedulePage/>}/>
+          <Route path='showtimes' element={<ShowtimesTable/>}/>
+          <Route path='users' element={<UsersTable/>} />
+          <Route path='theaters' element={<TheatersTable/>}/>
         </Route>
 
         <Route path='/user' element={<NavBar/>}>

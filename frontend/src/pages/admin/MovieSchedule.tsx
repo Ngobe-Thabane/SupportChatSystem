@@ -1,5 +1,5 @@
 
-import { useLocation } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import { useGenres, useTheaterList, type Cinema } from "../../stores/useMovieStore";
 import {useState } from "react";
 import { addMovie } from "../../lib/GetMovies";
@@ -7,6 +7,7 @@ import { useAuthStore } from "../../stores/useAuthStore";
 
 export default function MovieSchedulePage(){
   const {state} = useLocation();
+  const navigate = useNavigate();
   const cinemas = useTheaterList((state)=>state.theatersList) as Cinema[];
   const genres = useGenres((state)=>state.genreList);
   const token = useAuthStore((state)=>state.user?.token);
@@ -40,6 +41,7 @@ export default function MovieSchedulePage(){
       }
     })
     addMovie(state, token as string, showtimes)
+    navigate('/admin/showtimes');
   }
   const handleRemoveTime = (index: number) => {
     const updated = [...scheduledTimes];
@@ -147,7 +149,7 @@ export default function MovieSchedulePage(){
           {
             scheduledTimes.length > 0 &&
             <div className="form-control mt-8">
-              <button className="btn btn-success w-full max-w-sm mx-auto loading" onClick={addMovieShowtime} >Schedule Showtime</button>
+              <button className="btn btn-success w-full max-w-sm mx-auto" onClick={addMovieShowtime} >Schedule Showtime</button>
             </div>
           }
         </div>
