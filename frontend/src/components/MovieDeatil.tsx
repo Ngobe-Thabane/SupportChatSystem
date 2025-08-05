@@ -2,9 +2,15 @@ import { Link } from 'react-router';
 import type { Movie } from '../interfaces/Movies.interface';
 import type { ShowtTimes } from '../interfaces/Showtimes.iterface';
 import { useGenres } from '../stores/useMovieStore';
+import { useState } from 'react';
+import BookingModal from './BookingModal';
 
 export default function MovieCard({ movie, movieShowtimes }:{movie:Movie, movieShowtimes:Array<ShowtTimes>}){
+
   const genres = useGenres((state)=>state.genreList);
+  const [isBookMovie, setBookMovie] = useState(false);
+  console.log(movieShowtimes)
+
   return (
     <div className="flex flex-col lg:flex-row w-full bg-gradient-to-t from-transparent to-[#252525] shadow-md p-4 rounded-lg">
   <figure className="relative w-full h-full -mt-20 ml-4 lg:w-1/3">
@@ -29,22 +35,11 @@ export default function MovieCard({ movie, movieShowtimes }:{movie:Movie, movieS
           </>
       ))}
     </div>
-    <p className="text-sm my-2 text-gray-200">{movie.description}</p>
-    <div className="max-w-4xl px-6 mt-12">
-        <h2 className="text-sm font-semibold mb-4 text-start">Choose a Cinema</h2>
-      </div>
-      <div className='flex gap-4 px-1'>
-        {
-          movieShowtimes.map((show)=>{
-            return (
-              <div className='bg-base-300 p-2 rounded shadow cursor-pointer'>
-                <p className='text-md'>{show.theater_name}</p>
-                <p className='text-sm text-gray-500'>{show.location}</p>
-              </div>
-            )
-          })
-        }
-      </div>
+    <p className="text-sm my-2 text-gray-200 flex-1">{movie.description}</p>
+    <button className='self-end btn btn-primary' onClick={()=>setBookMovie(true)}>Book Now</button>
+    {
+      isBookMovie && <BookingModal cinemas={movieShowtimes} />
+    }
   </div>
 </div>
 

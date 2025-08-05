@@ -8,16 +8,13 @@ export async function getMovies(){
 
     const movies = await axios.get('http://localhost:5000/movies', options)
     return movies;
-
 }
 
 export async function getMovieShowtime() {
 
     const moviesShowtimes = await axios.get('', options);
     return moviesShowtimes;
-
 }
-
 
 export async function getMovieShowTime(movie_id:string) {
     const movieShowTimes = await axios.get(`http://localhost:5000/movieShowTime/${movie_id}`, {
@@ -47,4 +44,14 @@ export async function getTheaterList() {
 export async function getGenres() {
     const {data} = await axios.get('http://localhost:5000/genres', options);
     return data;
+}
+
+
+export async function getMovieList(type:string, page:string, token:string){
+    const movie_list = await axios.get(`http://localhost:5000/${type}/${page}`, {
+            headers : {
+            'Authorization' : `Bearer ${token}`
+            }
+        })
+    return movie_list.data;
 }

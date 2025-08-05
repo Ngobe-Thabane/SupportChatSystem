@@ -2,9 +2,9 @@
 export interface Auth {
   email:string,
   password:string,
-  role:string,
+  role?:string,
   name:string,
-  username:string,
+  username?:string,
 }
 
 

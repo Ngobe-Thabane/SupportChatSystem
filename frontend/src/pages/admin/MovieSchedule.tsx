@@ -147,7 +147,7 @@ export default function MovieSchedulePage(){
           {
             scheduledTimes.length > 0 &&
             <div className="form-control mt-8">
-              <button className="btn btn-success w-full max-w-sm mx-auto" onClick={addMovieShowtime} >Schedule Showtime</button>
+              <button className="btn btn-success w-full max-w-sm mx-auto loading" onClick={addMovieShowtime} >Schedule Showtime</button>
             </div>
           }
         </div>

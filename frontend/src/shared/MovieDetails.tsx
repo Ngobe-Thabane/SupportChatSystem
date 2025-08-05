@@ -11,7 +11,6 @@ export default function MovieDetails(){
   useEffect(()=>{
     const showTimes = async ()=>{
       const times = await getMovieShowTime(movieState.state.movie_id);
-      console.log(times.data)
       setMovieShowtimes(times.data.movieTime)
     }
     showTimes();

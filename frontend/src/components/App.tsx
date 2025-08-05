@@ -5,21 +5,19 @@ import Home from '../pages/Home';
 import AuthForm from './AuthForm';
 import AdminLayout from '../layouts/AdminLayout';
 import AdminDashboard from '../pages/admin/AdminDashBoard';
-import UserLayout from '../layouts/UserLayout';
-import UserDashboard from '../pages/user/UserDashboard';
 import { MovieGrid } from '../shared/MovieList';
 import { Movies } from '../pages/admin/MoviesAPIs';
 import MovieSchedulePage from '../pages/admin/MovieSchedule';
 import { useEffect } from 'react';
 import { getGenres, getTheaterList} from '../lib/GetMovies';
 import { useGenres, useTheaterList } from '../stores/useMovieStore';
-import CinemaSeatPreview from './CinemSeat';
+import { Bookings } from '../pages/user/Bookings';
+
 
 function App() {
 
   const setTheaters = useTheaterList((state)=>state.seTheaters);
   const setGenres = useGenres((state)=>state.setGenres);
-
 
   const getTheaters = async ()=>{
     const theater = await getTheaterList();
@@ -45,7 +43,6 @@ function App() {
           <Route path='/movieDetails' element={<MovieDetails/>}/>
           <Route path="/login" element={<AuthForm />} />
           <Route path="/signup" element={<AuthForm />} />
-          <Route path='/seats' element={<CinemaSeatPreview/>}/>
         </Route>
 
         <Route path='/admin' element={<AdminLayout/>}>
@@ -54,10 +51,11 @@ function App() {
           <Route path='/admin/addMovie' element={<MovieSchedulePage/>}/>
         </Route>
 
-        <Route path='/user' element={<UserLayout/>}>
-          <Route index element={<UserDashboard/>}/>
+        <Route path='/user' element={<NavBar/>}>
+          <Route index element={<Bookings/>}/>
           <Route path='/user/explore' element={<MovieGrid/>} />
           <Route path='/user/moviedetails' element={<MovieDetails/>} />
+          <Route path='/user/bookings' element={<Bookings/>} />
         </Route>
 
       </Routes>

@@ -2,7 +2,6 @@
 import { Link, Outlet, useNavigate } from "react-router";
 import { useAuthStore } from "../stores/useAuthStore";
 import Home from "../pages/Home";
-// import { FiLogOut, FiUsers, FiFilm, FiMessageCircle, FiStar, FiSettings, FiGrid } from "react-icons";
 
 export default function AdminLayout() {
   const user = useAuthStore((state) => state.user);

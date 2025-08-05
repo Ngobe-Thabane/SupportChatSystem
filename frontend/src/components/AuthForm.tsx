@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
+import { useMutation } from "@tanstack/react-query";
 import { useAuthStore } from "../stores/useAuthStore";
 import { loginUser, registerUser } from "../lib/Auth";
 import type { Auth } from "../interfaces/Auth.Interface";
 
 export default function AuthForm() {
   const [mode, setMode] = useState<"login" | "signup">("login");
-  const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const login = useAuthStore((state) => state.login);
   const navigate = useNavigate();
@@ -16,31 +16,52 @@ export default function AuthForm() {
     setError("");
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const loginMutation = useMutation({
+    mutationFn: (data: Auth) => loginUser(data),
+    onSuccess: (res) => {
+      const { token, user } = res.data;
+      localStorage.setItem("token", token);
+      login({ username: user.username, role: user.role, token });
+      navigate(user.role === "admin" ? "/admin" : "/user");
+    },
+    onError: (err: any) => {
+      setError(err.response?.data?.message || "Login failed");
+    },
+  });
+
+  const registerMutation = useMutation({
+    mutationFn: (data: Auth) => registerUser(data),
+    onSuccess: () => {
+      setMode("login");
+    },
+    onError: (err: any) => {
+      setError(err.response?.data?.message || "Signup failed");
+    },
+  });
+
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const form = e.target as HTMLFormElement;
     const email = form.email.value;
     const password = form.password.value;
     const username = form.username?.value;
 
-    try {
-      setLoading(true);
-      if(mode === 'login'){
-        const res = await loginUser({email:email, password:password} as Auth);
-        const { token, user } = res.data; 
-        login({ username: user.username, role: user.role, token });
-        navigate(user.role === "admin" ? "/admin" : "/user");
-      }else{
-        registerUser({email:email, username:username, password:password} as Auth);
-        setMode('login');
-      }
+    setError("");
 
-    } catch (err: any) {
-      setError(err.response?.data?.message || "Authentication failed");
-    } finally {
-      setLoading(false);
+    const payload: Auth = {
+      email,
+      password,
+      ...(mode === "signup" && { username }),
+    };
+
+    if (mode === "login") {
+      loginMutation.mutate(payload);
+    } else {
+      registerMutation.mutate(payload);
     }
   };
+
+  const loading = loginMutation.isPending || registerMutation.isPending;
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-base-200">
@@ -78,6 +99,7 @@ export default function AuthForm() {
           <button
             type="submit"
             className={`btn btn-primary w-full ${loading ? "loading" : ""}`}
+            disabled={loading}
           >
             {mode === "login" ? "Login" : "Sign Up"}
           </button>

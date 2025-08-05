@@ -1,4 +1,4 @@
-import React, { type JSX, useState } from 'react';
+import React, { type JSX, useEffect, useState } from 'react';
 import type { Seats } from '../interfaces/Showtimes.iterface';
 import Seat from './Seats';
 
@@ -11,6 +11,7 @@ export default function RenderSeats({seats}:{seats:Seats[]}){
   const leftBlock: JSX.Element[] = [];
   const rightBlock: JSX.Element[] = [];
   const [selectedSeats, setSelectedSeats] = useState<Set<string>>(new Set());
+  useEffect(()=>{}, [seats]);
 
 	const handleSeatClick = (seatLabel: string) => {
 
@@ -53,7 +54,7 @@ export default function RenderSeats({seats}:{seats:Seats[]}){
   }
 
   return (
-    <div className="relative w-full h-full z-10 flex justify-center gap-16 flex-wrap">
+    <div className="relative w-full mb-3 py-2 z-10 flex justify-center gap-16">
       <div className="flex flex-col gap-2">{leftBlock}</div>
       <div className="flex flex-col gap-2">{rightBlock}</div>
     </div>
