@@ -1,6 +1,7 @@
 import React, { type JSX, useEffect, useState } from 'react';
 import type { Seats } from '../interfaces/Showtimes.iterface';
 import Seat from './Seats';
+import { useSeats } from '../stores/useBookingStore';
 
 const SEATS_PER_ROW = 8;
 const ROWS = 8;
@@ -10,6 +11,8 @@ export default function RenderSeats({seats}:{seats:Seats[]}){
 
   const leftBlock: JSX.Element[] = [];
   const rightBlock: JSX.Element[] = [];
+  const addSeat = useSeats((state)=>state.addSeat);
+  const removeSeat = useSeats((state)=>state.removeSeat);
   const [selectedSeats, setSelectedSeats] = useState<Set<string>>(new Set());
   useEffect(()=>{}, [seats]);
 
@@ -17,9 +20,11 @@ export default function RenderSeats({seats}:{seats:Seats[]}){
 
 		const newSeats = new Set(selectedSeats);
 		if (newSeats.has(seatLabel)) {
-				newSeats.delete(seatLabel);
+      newSeats.delete(seatLabel); 
+      removeSeat(seatLabel);
 		} else {
 				newSeats.add(seatLabel);
+        addSeat(seatLabel);
 		}
 		setSelectedSeats(newSeats);
 	};

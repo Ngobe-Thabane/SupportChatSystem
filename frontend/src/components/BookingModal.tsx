@@ -4,6 +4,9 @@ import type { ShowtTimes } from '../interfaces/Showtimes.iterface';
 import RenderSeats from './ShowSeats';
 import MovieDateSelector, { type MovieSchedule } from './Moviedateselectorprops';
 import { useNavigate } from 'react-router';
+import { useSeats } from '../stores/useBookingStore';
+import { useAuthStore } from '../stores/useAuthStore';
+import { BookMovi } from '../lib/Booking';
 
 export type Showtime = { time: string };
 export type Seat = { id: number; label: string; selected: boolean };
@@ -19,11 +22,9 @@ export default function BookingModal({cinemas}:{cinemas:Array<ShowtTimes>}) {
   const [weekDays, setWeekDays] = useState<WeekDay[]>([]);
   const [filteredWeekDays, setFilteredWeekDays] = useState<WeekDay[]>([]);
   const [currentMonthYear, setCurrentMonthYear] = useState('');
-  const scheduleData: MovieSchedule[] = [
-  { date: '2025-08-05', times: ['1:00 PM', '4:00 PM', '7:00 PM'] },
-  { date: '2025-08-06', times: ['12:00 PM', '3:00 PM', '6:00 PM'] },
-  { date: '2025-08-07', times: ['2:00 PM', '5:00 PM'] },
-];
+  const scheduleData: MovieSchedule[] = cinemas.map((showTime)=>{
+    return {date:showTime.show_date, times:[showTime.start_time]}
+  });
 
 
 
@@ -35,7 +36,6 @@ export default function BookingModal({cinemas}:{cinemas:Array<ShowtTimes>}) {
       return { label: d.toLocaleDateString(undefined, { weekday: 'short' }), date: d };
     });
     setWeekDays(days);
-    console.log(days)
     setFilteredWeekDays(days);
     setCurrentMonthYear(
       days[0].date.toLocaleDateString(undefined, { month: 'long', year: 'numeric' })
@@ -69,10 +69,14 @@ export default function BookingModal({cinemas}:{cinemas:Array<ShowtTimes>}) {
 
 export function ConfirmButton() {
   const navigate = useNavigate();
+  const {showtime_id, seatsList} = useSeats((state)=>state)
+  const token = useAuthStore((state)=>state.token);
   return (
     <button className="bg-blue-700 text-white px-4 py-2 rounded hover:bg-blue-800 cursor-pointer"
-    onClick={()=>{
+    onClick={async()=>{
+      await BookMovi(showtime_id, seatsList, token as string);
       navigate('/user/bookings');
+
     }}>
       Confirm Booking
     </button>
