@@ -13,7 +13,7 @@ export async function bookingController(req:Request, res:Response){
 
 export async function cancelBookingController(req:Request, res:Response){
   const {booking_id} = req.body;
-
+  console.log(booking_id)
   if(!booking_id) return res.status(400).send({message:"Booking id is required"});
 
   const bookingCanceled = cancelBooking(req.user?.id as string, booking_id);
@@ -22,7 +22,6 @@ export async function cancelBookingController(req:Request, res:Response){
 }
 
 export async function getUserBooking(req:Request, res:Response) {
-  console.log(req.user?.id);
   const userBookings = await getUserDashboard(req.user?.id as string);
   return res.status(200).send(userBookings);
   

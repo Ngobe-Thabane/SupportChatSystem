@@ -6,7 +6,7 @@ export default function Home(){
         <>
             <HeroCarousel/>
                 <div className="m-4">
-                    <h1 className="text-2xl text-red-200 font-bold">Trending</h1>
+                    <h1 className="text-2xl text-red-200 font-bold">Now Showing</h1>
                 </div>
             <MovieGrid/>
         </>

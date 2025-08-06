@@ -1,10 +1,11 @@
-import { Link, Outlet } from "react-router";
+import { Link, Outlet, useNavigate } from "react-router";
 import { useAuthStore } from "../stores/useAuthStore";
 import Footer from "../shared/Footer";
 
 export default function Navbar() {
-  const user = useAuthStore((state) => state.user);
-
+  const user = useAuthStore((state) => state.user?.token);
+  const logout = useAuthStore((state)=>state.logout);
+  const navigate = useNavigate();
   return (
     <>
       <div className="navbar bg-base-100/20 backdrop-blur-md shadow-sm z-50 mb-2 px-4">
@@ -29,29 +30,23 @@ export default function Navbar() {
           {user ? (
             <>
               {/* My Bookings Dropdown */}
-              <div className="dropdown dropdown-hover dropdown-bottom">
-                <label tabIndex={0} className="btn btn-ghost m-1">My Bookings</label>
-                <ul
-                  tabIndex={0}
-                  className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
-                >
-                  <li><Link to="/user/bookings/current">Current Bookings</Link></li>
-                  <li><Link to="/user/bookings/history">Booking History</Link></li>
-                  <li><Link to="/user/bookings/cancelled">Cancelled Bookings</Link></li>
-                </ul>
-              </div>
+              <Link to={'/user/bookings'} className="font-bold">My Bookings</Link>
 
               {/* Avatar */}
               <div className="dropdown dropdown-end">
-                <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
-                  <div className="w-10 rounded-full">
-                    <img
-                      alt="User avatar"
-                      src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
-                    />
-                  </div>
-                </div>
-              </div>
+      <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
+        <div className="w-10 rounded-full">
+          <img
+            alt="Tailwind CSS Navbar component"
+            src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+        </div>
+      </div>
+      <ul
+        tabIndex={0}
+        className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
+        <li><Link to={'/login'}>Logout</Link></li>
+      </ul>
+    </div>
             </>
           ) : (
             <Link to="/login" className="btn btn-outline btn-sm">Login</Link>

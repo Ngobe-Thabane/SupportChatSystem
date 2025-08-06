@@ -35,6 +35,7 @@ export default function MovieCard({ movie, movieShowtimes }:{movie:Movie, movieS
           </>
       ))}
     </div>
+    <p className='font-bold text-gray-400 my-2'>Release date: 29 August 2024</p>
     <p className="text-sm my-2 text-gray-200 flex-1">{movie.description}</p>
     <button className='self-end btn btn-primary' onClick={()=>setBookMovie(true)}>Book Now</button>
     {

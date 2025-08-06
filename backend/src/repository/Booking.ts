@@ -54,29 +54,23 @@ export async function bookSeats(user_id: string, showtime_id: string, seat_numbe
 
 
 export async function getUserDashboard(user_id: string) {
-  const query =  `
-    SELECT
-      sh.showtime_id,
+  const query =  `SELECT
+      b.booking_id,
+      b.booked_at,
+      s.seat_number,
       m.title AS movie_title,
       m.poster_url,
-      m.movie_id,
       sh.show_date,
       sh.start_time,
       t.name AS theater_name,
-      t.location,
-      ARRAY_AGG(s.seat_number ORDER BY s.seat_number) AS seat_numbers,
-      MIN(b.booked_at) AS booked_at,
-      MAX(b.status) AS status
+      t.location
     FROM bookings b
-    LEFT JOIN seats s ON b.seat_id = s.seat_id
-    LEFT JOIN showtimes sh ON s.showtime_id = sh.showtime_id
-    LEFT JOIN movies m ON sh.movie_id = m.movie_id
-    LEFT JOIN theaters t ON sh.theater_id = t.theater_id
+    JOIN seats s ON b.seat_id = s.seat_id
+    JOIN showtimes sh ON s.showtime_id = sh.showtime_id
+    JOIN movies m ON sh.movie_id = m.movie_id
+    JOIN theaters t ON sh.theater_id = t.theater_id
     WHERE b.user_id = $1 AND b.status = 'active'
-    GROUP BY sh.showtime_id, m.title, m.poster_url, m.movie_id,
-             sh.show_date, sh.start_time, t.name, t.location
-    ORDER BY sh.show_date, sh.start_time;
-  `;
+    ORDER BY sh.show_date, sh.start_time;`;
   const result = await db.query(query, [user_id]);
   return result.rows;
 }

@@ -26,10 +26,7 @@ export function BookingCard({booking}:{booking:UserBookings}){
 					</Link>
 					<p className="text-sm mt-1 text-info">Show Date: {date.toDateString()}</p>
 					<p className="text-sm mt-1 text-info">ShowTime: {booking.start_time}</p>
-					<p className="text-sm text-info flex gap-1">Seats:{
-					booking.seat_numbers.map((seat)=>{
-						return <span>{seat}</span>
-					})
+					<p className="text-sm text-info flex gap-1">Seats:{booking.seat_number
 					}</p>
 				</div>
 

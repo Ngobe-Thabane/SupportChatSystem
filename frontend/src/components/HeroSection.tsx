@@ -82,12 +82,12 @@ export default function HeroCarousel() {
   </p>
 
   {/* Actions */}
-  <div className="flex flex-wrap gap-4">
+  {/* <div className="flex flex-wrap gap-4">
     <button className="btn btn-primary text-white">Book Now</button>
     <button className="btn btn-outline border-white text-white hover:bg-white/10">
       Watch Trailer
     </button>
-  </div>
+  </div> */}
 </div>
 </div>
 

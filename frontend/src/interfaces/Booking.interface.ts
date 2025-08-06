@@ -18,7 +18,7 @@ export interface UserBookings {
   movie_id:string,
   start_time:string,
   show_date:string,
-  seat_numbers:Array<string>,
+  seat_number:string,
   theater_name:string,
   location:string
 }

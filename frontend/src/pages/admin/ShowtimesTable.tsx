@@ -6,13 +6,19 @@ import { getMovieShowtimes } from "../../lib/GetMovies";
 const ShowtimesTable: React.FC = () => {
   const [showtimes, setShowtimes] = useState<Array<ShowtTimes>>([]);
 
+  const deleteShowTime = (id:string)=>{
+    const times = showtimes.filter((time)=>{
+      return time.showtime_id != id;
+    })
+    setShowtimes(times)
+  }
   useEffect(()=>{
     const getshowtimes = async ()=>{
       const showtimesList = await getMovieShowtimes();
       setShowtimes(showtimesList);
     }
     getshowtimes();
-  })
+  },[])
 
   return (
     <>
@@ -27,7 +33,9 @@ const ShowtimesTable: React.FC = () => {
           <button className="text-blue-600 hover:underline">
             Edit
           </button>
-          <button className="text-red-600 hover:underline">
+          <button className="text-red-600 hover:underline" onClick={()=>{
+            deleteShowTime(s.showtime_id);
+          }}>
             Delete
           </button>
         </div>,

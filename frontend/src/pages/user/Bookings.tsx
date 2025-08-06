@@ -16,6 +16,10 @@ export function Bookings(){
 	})
 	return (
 		<>
+		<h1 className="text-2xl font-bold m-4">Bookings</h1>
+		{
+			userBookings.length === 0 && <div><p>You do not have any Bookings</p></div>
+		}
 		<div className="grid mx-3 min-h-screen my-4 gap-2 justify-center grid-cols-[repeat(auto-fit,_minmax(300px,_1fr))]">
 			{
 				userBookings.map((booking)=>{

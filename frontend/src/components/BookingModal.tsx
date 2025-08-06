@@ -14,6 +14,7 @@ export type WeekDay = { label: string; date: Date };
 
 export default function BookingModal({cinemas}:{cinemas:Array<ShowtTimes>}) {
 
+  
   const [showModal, setShowModal] = useState(true);
   const [selectedCinema, setSelectedCinema] = useState(0);
   const [selectedDay, setSelectedDay] = useState(0);
@@ -25,9 +26,9 @@ export default function BookingModal({cinemas}:{cinemas:Array<ShowtTimes>}) {
   const scheduleData: MovieSchedule[] = cinemas.map((showTime)=>{
     return {date:showTime.show_date, times:[showTime.start_time]}
   });
-
-
-
+  
+  
+  
   useEffect(() => {
     const today = new Date();
     const days: WeekDay[] = Array.from({ length: 7 }, (_, i) => {
@@ -41,9 +42,9 @@ export default function BookingModal({cinemas}:{cinemas:Array<ShowtTimes>}) {
       days[0].date.toLocaleDateString(undefined, { month: 'long', year: 'numeric' })
     );
   }, []);
-
+  
   if (!showModal) return null;
-
+  
   return (
     <div className="fixed inset-0 bg-black/50 bg-opacity-90 flex items-center justify-center z-50 p-4">
       <div className="bg-base-100/85 backdrop-blur w-full max-w-6xl rounded-lg shadow-lg grid grid-cols-1 md:grid-cols-3 gap-6 p-6">
@@ -70,12 +71,16 @@ export default function BookingModal({cinemas}:{cinemas:Array<ShowtTimes>}) {
 export function ConfirmButton() {
   const navigate = useNavigate();
   const {showtime_id, seatsList} = useSeats((state)=>state)
-  const token = useAuthStore((state)=>state.token);
+  const token = useAuthStore((state)=>state.user?.token);
   return (
     <button className="bg-blue-700 text-white px-4 py-2 rounded hover:bg-blue-800 cursor-pointer"
     onClick={async()=>{
-      await BookMovi(showtime_id, seatsList, token as string);
-      navigate('/user/bookings');
+      if(token){
+        await BookMovi(showtime_id, seatsList, token as string);
+        navigate('/user/bookings');
+      }else{
+        navigate('/login');
+      }
 
     }}>
       Confirm Booking
