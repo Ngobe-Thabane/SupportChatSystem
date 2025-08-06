@@ -4,7 +4,6 @@ import { bookSeats, cancelBooking, getUserDashboard } from "../repository/Bookin
 
 export async function bookingController(req:Request, res:Response){
   const {showTime_id, seat_numbers} = req.body;
-
   if(!showTime_id || !seat_numbers) return res.status(400).send({message:'All fields must be field'});
   
   const bookedSeat = await bookSeats(req.user?.id as string, showTime_id, seat_numbers);
@@ -23,8 +22,8 @@ export async function cancelBookingController(req:Request, res:Response){
 }
 
 export async function getUserBooking(req:Request, res:Response) {
-
-  const userBookings = getUserDashboard(req.user?.id as string);
+  console.log(req.user?.id);
+  const userBookings = await getUserDashboard(req.user?.id as string);
   return res.status(200).send(userBookings);
   
 }

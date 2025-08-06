@@ -67,7 +67,8 @@ export async function getShowTimes() {
     m.title,
     m.poster_url,
     t.name,
-    t.location
+    t.location,
+    t.theater_id
   ORDER BY s.show_date, s.start_time;`;
   const result = await db.query(query);
   return result.rows;

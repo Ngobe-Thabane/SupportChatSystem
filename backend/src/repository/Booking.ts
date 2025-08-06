@@ -27,13 +27,11 @@ export async function bookSeats(user_id: string, showtime_id: string, seat_numbe
         throw new Error(`Seat ${seatNumber} is already reserved`);
       }
 
-      // 2. Mark the seat as reserved
       await db.query(
         `UPDATE seats SET is_reserved = TRUE WHERE seat_id = $1`,
         [seat.seat_id]
       );
 
-      // 3. Insert booking record
       await db.query(
         `
         INSERT INTO bookings (user_id, seat_id)
@@ -56,24 +54,28 @@ export async function bookSeats(user_id: string, showtime_id: string, seat_numbe
 
 
 export async function getUserDashboard(user_id: string) {
-  const query = `
+  const query =  `
     SELECT
-      b.booking_id,
-      b.booked_at,
-      s.seat_number,
+      sh.showtime_id,
       m.title AS movie_title,
       m.poster_url,
-      m.description,
+      m.movie_id,
       sh.show_date,
       sh.start_time,
       t.name AS theater_name,
-      t.location
+      t.location,
+      ARRAY_AGG(s.seat_number ORDER BY s.seat_number) AS seat_numbers,
+      MIN(b.booked_at) AS booked_at,
+      MAX(b.status) AS status
     FROM bookings b
-    JOIN seats s ON b.seat_id = s.seat_id
-    JOIN showtimes sh ON s.showtime_id = sh.showtime_id
-    JOIN movies m ON sh.movie_id = m.movie_id
-    JOIN theaters t ON sh.theater_id = t.theater_id
-    WHERE b.user_id = $1;
+    LEFT JOIN seats s ON b.seat_id = s.seat_id
+    LEFT JOIN showtimes sh ON s.showtime_id = sh.showtime_id
+    LEFT JOIN movies m ON sh.movie_id = m.movie_id
+    LEFT JOIN theaters t ON sh.theater_id = t.theater_id
+    WHERE b.user_id = $1 AND b.status = 'active'
+    GROUP BY sh.showtime_id, m.title, m.poster_url, m.movie_id,
+             sh.show_date, sh.start_time, t.name, t.location
+    ORDER BY sh.show_date, sh.start_time;
   `;
   const result = await db.query(query, [user_id]);
   return result.rows;
