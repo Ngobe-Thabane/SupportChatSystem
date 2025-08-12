@@ -14,7 +14,7 @@ export function MovieGrid(){
     }, []);
 
     return (
-        <div className="grid mx-3 gap-2 justify-center grid-cols-[repeat(auto-fit,_minmax(250px,_1fr))]">
+        <div className="grid  mx-3 gap-4 justify-center grid-cols-[repeat(auto-fit,_minmax(250px,_1fr))]">
         {
             movies.map((movie) => (
             <div key={movie.id}>

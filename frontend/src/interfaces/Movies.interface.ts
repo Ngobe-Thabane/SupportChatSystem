@@ -1,13 +1,14 @@
 import type { ShowtTimes } from "./Showtimes.iterface"
 
 export interface Movie{
-    movie_id?:string,
+    id:string,
     title:string,
     poster_url:string,
     description:string,
-    genres?:Array<number>
+    genres:Array<number>
     total_bookings?:string,
-    release_date: string
+    release_date: string,
+    vote_average:string
 }
 
 export interface AdminStats{

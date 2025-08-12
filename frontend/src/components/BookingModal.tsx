@@ -28,7 +28,6 @@ export default function BookingModal({cinemas}:{cinemas:Array<ShowtTimes>}) {
   });
   
   
-  
   useEffect(() => {
     const today = new Date();
     const days: WeekDay[] = Array.from({ length: 7 }, (_, i) => {

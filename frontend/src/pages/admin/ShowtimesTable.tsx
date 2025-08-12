@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Table from "./Table";
 import type { ShowtTimes } from "../../interfaces/Showtimes.iterface";
 import { getMovieShowtimes } from "../../lib/GetMovies";
+import { Pencil, Trash } from "lucide-react";
 
 const ShowtimesTable: React.FC = () => {
   const [showtimes, setShowtimes] = useState<Array<ShowtTimes>>([]);
@@ -22,21 +23,21 @@ const ShowtimesTable: React.FC = () => {
 
   return (
     <>
-    <h1 className="text-3xl font-bold mb-2">Showtimes</h1>
+    <h1 className="text-3xl font-bold m-4">Showtimes</h1>
     <Table
       headers={["Movie", "Theater", "Time", "Actions"]}
       data={showtimes.map((s) => [
         s.movie_title,
         s.theater_name,
         s.start_time,
-        <div className="space-x-2" key={s.showtime_id}>
+        <div className="space-x-2 flex gap-3" key={s.showtime_id}>
           <button className="text-blue-600 hover:underline">
-            Edit
+            <Pencil/>
           </button>
           <button className="text-red-600 hover:underline" onClick={()=>{
             deleteShowTime(s.showtime_id);
           }}>
-            Delete
+            <Trash/>
           </button>
         </div>,
       ])}

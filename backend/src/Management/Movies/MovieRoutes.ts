@@ -5,7 +5,6 @@ import { requireAdmin, verifyToken } from '../../middlewares/RoutesMiddleware.ts
 const movieRoutes = express.Router();
 
 movieRoutes.get('/movies', getMoviesController);
-movieRoutes.get('/movie/:id', getMovieController);
 movieRoutes.get('/genres', getGenresControllers);
 movieRoutes.get('/stats', verifyToken, requireAdmin, adminStatsController);
 movieRoutes.post('/movie', verifyToken,requireAdmin ,addMovieController);

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Table from "./Table";
 import { getTheaterList } from "../../lib/GetMovies";
 import type { Thater } from "../../interfaces/Theater.interface";
+import { Pencil, Trash } from "lucide-react";
 
 const TheatersTable = () => {
 
@@ -20,10 +21,10 @@ const TheatersTable = () => {
       data={theaters.map((t) => [t.name, t.location,
 				<div className="space-x-2" key={t.theater_id}>
           <button  className="text-blue-600 hover:underline">
-            Edit
+            <Pencil />
           </button>
           <button  className="text-red-600 hover:underline">
-            Delete
+            <Trash />
           </button>
         </div>
 			])}

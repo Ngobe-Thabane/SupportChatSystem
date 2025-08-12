@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { getMovieList } from "./MovieDbService.ts";
+import { getMoviedtails, getMovieList } from "./MovieDbService.ts";
 
 
 
@@ -60,4 +60,18 @@ export async function getUpcomingMovies(req:Request, res:Response) {
     return res.status(500).send({message:'Internal Server Error'});
   }
 
+}
+
+export async function getMoviedetailsController(req:Request, res:Response) {
+  try{
+    const {movie_id} = req.params;
+    if(!movie_id) res.status(400).send({message:'Movie id is required'});
+
+    const movie_details = await getMoviedtails(movie_id);
+    return res.status(200).send(movie_details);
+
+  }catch(err:any){
+    return res.status(500).send({message:err.message})
+  }
+  
 }

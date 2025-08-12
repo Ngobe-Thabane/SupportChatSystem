@@ -7,7 +7,7 @@ type TableProps = {
 
 const Table: React.FC<TableProps> = ({ headers, data }) => {
   return (
-    <div className="overflow-x-auto rounded-box border border-base-content/5 bg-base-100">
+    <div className="overflow-x-auto rounded-box border border-base-content/5 bg-base-100 m-4">
       <table className="table">
         <thead>
           <tr className="">

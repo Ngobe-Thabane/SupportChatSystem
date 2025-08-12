@@ -48,8 +48,9 @@ function App() {
           <Route path="/signup" element={<AuthForm />} />
         </Route>
 
-        <Route path='/admin' element={<AdminLayout/>}>
+        <Route path='/admin' element={<NavBar/>}>
           <Route index element={<AdminDashboard />} />
+          <Route path={'/admin/dashboard'} element={<AdminDashboard/>}/>
           <Route path='/admin/movies' element={<Movies/>}/>
           <Route path='/admin/addMovie' element={<MovieSchedulePage/>}/>
           <Route path='showtimes' element={<ShowtimesTable/>}/>

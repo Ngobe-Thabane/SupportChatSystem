@@ -21,3 +21,22 @@ export async function getMovieList(list_type:string, page_number:string){
 
   return movie_list.data.results;
 }
+
+
+export async function getMoviedtails(movie_id:string) {
+  const movie_cached = await client.get(`${movie_id}`);
+
+  if(movie_cached){ return JSON.parse(movie_cached)}
+
+  const movie_list = (await axios.get(`https://api.themoviedb.org/3/movie/${movie_id}?append_to_response=credits,videos,reviews`, {
+    headers:{
+      'Authorization': `Bearer ${process.env.API_KEY}`,
+      'Accept': 'applications/json'
+    }
+  }));
+
+  await client.set(`${movie_id}`, JSON.stringify(movie_list.data));
+
+  return movie_list.data;
+  
+}
